@@ -1,0 +1,9 @@
+node_modules/
+dist/
+storybook-static/
+*.tgz
+*.log
+.env.local
+.vercel/
+
+*storybook.log

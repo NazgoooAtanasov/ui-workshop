@@ -39,6 +39,9 @@ static Storybook site is written to `storybook-static/`.
 
 ## Vercel hosting
 
+[Live Storybook](https://ui-workshop-five.vercel.app) ·
+[Vercel project](https://vercel.com/atanas-atanasovs-projects-c9bca4be/ui-workshop)
+
 `vercel.json` builds with `pnpm build` and serves `storybook-static/` using the
 Other framework preset. The project uses Node 24 and
 `ENABLE_EXPERIMENTAL_COREPACK=1` so Vercel respects the pinned pnpm version.

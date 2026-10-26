@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { AddonPanel } from 'storybook/internal/components';
 import { addons, types, useStorybookApi } from 'storybook/manager-api';
+import { styled } from 'storybook/theming';
 
 import {
   approvalResponseSchema,
@@ -21,6 +22,49 @@ declare global {
 }
 
 const panelId = 'workshop/approval/panel';
+
+const ApprovalSurface = styled.section(({ theme }) => ({
+  background: theme.background.content,
+  color: theme.fgColor.default,
+  fontFamily: theme.typography.fonts.base,
+  '& a': { color: theme.fgColor.accent },
+  '& .workshop-approval__badge, & .workshop-approval__notice, & .workshop-approval__status p': {
+    background: theme.bgColor.muted,
+  },
+  '& .workshop-approval__revision': { borderColor: theme.appBorderColor },
+  '& dt, & .workshop-approval__version, & .workshop-approval__footnote': {
+    color: theme.fgColor.muted,
+  },
+  '& .workshop-approval__field input, & select, & option': {
+    background: theme.input.background,
+    color: theme.input.color,
+    borderColor: theme.input.border,
+  },
+  '& input': { accentColor: theme.fgColor.accent },
+  '& .workshop-approval__submit': {
+    background: theme.fgColor.default,
+    color: theme.fgColor.inverse,
+  },
+  '& .workshop-approval__status .workshop-approval__success': {
+    background: theme.bgColor.positive,
+    color: theme.fgColor.positive,
+  },
+  '& .workshop-approval__status .workshop-approval__error': {
+    background: theme.bgColor.negative,
+    color: theme.fgColor.negative,
+  },
+  '& .workshop-approval__success a, & .workshop-approval__error a': { color: 'inherit' },
+  '& input:focus-visible, & select:focus-visible, & button:focus-visible, & a:focus-visible': {
+    outline: `2px solid ${theme.fgColor.accent}`,
+    outlineOffset: 3,
+  },
+}));
+
+const ApprovalToolButton = styled.button(({ theme }) => ({
+  color: theme.barTextColor,
+  '&:hover': { background: theme.background.hoverable, color: theme.barHoverColor },
+  '&:focus-visible': { outline: `2px solid ${theme.fgColor.accent}`, outlineOffset: 3 },
+}));
 
 function ApprovalPanel({ active }: { active: boolean }) {
   const context = window.__WORKSHOP_REVIEW__;
@@ -96,11 +140,11 @@ function ApprovalPanel({ active }: { active: boolean }) {
 
   return (
     <AddonPanel active={active}>
-      <section className="workshop-approval" aria-label="Design approval">
+      <ApprovalSurface className="workshop-approval" aria-label="Component change approval">
         <header className="workshop-approval__header">
           <div>
-            <h2>Review this revision</h2>
-            <p>Approve the changes in this deployment and prepare their release pull request.</p>
+            <h2>Review component changes</h2>
+            <p>Review all states and stories for the changed components, then approve this revision as a whole.</p>
           </div>
           <span className="workshop-approval__badge">@poc/ui</span>
         </header>
@@ -109,6 +153,7 @@ function ApprovalPanel({ active }: { active: boolean }) {
           <div><dt>Commit</dt><dd><a href={`https://github.com/${repository}/commit/${context.sha}`} target="_blank" rel="noreferrer">{context.sha.slice(0, 10)}</a></dd></div>
           <div><dt>Current version</dt><dd>{context.version}</dd></div>
         </dl>
+        <p className="workshop-approval__notice"><strong>One approval covers all stories.</strong> This approves every change in the branch revision and prepares one release PR for the @poc/ui package.</p>
 
         {!canApprove ? (
           <p className="workshop-approval__notice">Open a deployed <code>design/…</code> branch preview to approve its changes. This deployment is available for review only.</p>
@@ -130,10 +175,10 @@ function ApprovalPanel({ active }: { active: boolean }) {
               </label>
               <label className="workshop-approval__confirmation">
                 <input type="checkbox" checked={reviewed} onChange={(event) => setReviewed(event.target.checked)} />
-                <span>I reviewed all changes in this revision and approve creating its pull request.</span>
+                <span>I reviewed every changed component and its stories, and approve this revision for release.</span>
               </label>
               <button className="workshop-approval__submit" type="submit" disabled={!reviewed || !accessKey}>
-                {submitting || pending ? 'Creating pull request…' : 'Approve & create PR'}
+                {submitting || pending ? 'Creating pull request…' : 'Approve changes & create PR'}
               </button>
             </fieldset>
           </form>
@@ -144,8 +189,8 @@ function ApprovalPanel({ active }: { active: boolean }) {
           {result?.state === 'completed' && <p className="workshop-approval__success">Pull request ready. <a href={result.prUrl} target="_blank" rel="noreferrer">Open pull request</a></p>}
           {result?.state === 'failed' && <p role="alert" className="workshop-approval__error">{result.message} {result.workflowUrl && <a href={result.workflowUrl} target="_blank" rel="noreferrer">View workflow</a>}</p>}
         </div>
-        <p className="workshop-approval__footnote">Approval creates a pull request with the version bump. Merging and package handoff happen afterward. Your access key is never saved in browser storage.</p>
-      </section>
+        <p className="workshop-approval__footnote">You can keep improving this branch before approving. The release PR proposes one package version; stories do not receive separate versions. Merging and package handoff happen afterward. Your access key is never saved in browser storage.</p>
+      </ApprovalSurface>
     </AddonPanel>
   );
 }
@@ -153,12 +198,12 @@ function ApprovalPanel({ active }: { active: boolean }) {
 function ApprovalTool() {
   const api = useStorybookApi();
   return (
-    <button className="workshop-approval-tool" type="button" onClick={() => {
+    <ApprovalToolButton className="workshop-approval-tool" type="button" onClick={() => {
       api.togglePanel(true);
       api.setSelectedPanel(panelId);
     }}>
       <span aria-hidden="true">✓</span> Review & approve
-    </button>
+    </ApprovalToolButton>
   );
 }
 

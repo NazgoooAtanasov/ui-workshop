@@ -122,6 +122,13 @@ bump, enter the reviewer access key, and approve the revision. The panel follows
 the release workflow and shows the resulting PR link. The final approval stays
 inside Storybook; GitHub does not require another confirmation click.
 
+Stories are review examples, not separate approval or version units. For this
+pilot, keep each component change on its own design branch and review all of its
+stories before approving. Approval covers the entire branch revision and creates
+one release PR with one version bump for the whole `@poc/ui` package. You can
+iterate on the component across multiple commits before requesting that release.
+The approval panel follows Storybook's active manager theme, including dark mode.
+
 The production `/api/approval` function dispatches `approve-design.yml` on `main`.
 The workflow verifies the exact approved commit, builds it, adds a version-only
 commit on a release branch derived from that revision, and opens a PR to `main`.

@@ -25,6 +25,7 @@ import '@poc/ui/styles.css';
 - `label` is required. `variant` defaults to `primary`; `size` defaults to `small`.
 - Small: 36 px high, 16 px horizontal padding, 10 px corners, Inter Bold 14/20.
 - Medium: 48 px high, 24 px horizontal padding, 12 px corners, Inter Bold 16/24.
+- Primary: black (`#000000`) by default and on focus, `#262626` on hover.
 - Native button props, including `disabled`, `type`, `aria-*`, and React 19 `ref`,
   pass through. The default `type` is `button`, so it does not submit a form.
 - Hover transitions take 120 ms and respect reduced motion. Keyboard focus has

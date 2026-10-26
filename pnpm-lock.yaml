@@ -8,6 +8,9 @@ importers:
 
   .:
     devDependencies:
+      '@fontsource/inter':
+        specifier: 5.3.0
+        version: 5.3.0
       '@storybook/addon-a11y':
         specifier: ^10.6.3
         version: 10.6.3(storybook@10.6.3(@types/react@19.3.0)(react@19.3.1))
@@ -38,6 +41,9 @@ importers:
       storybook:
         specifier: ^10.6.3
         version: 10.6.3(@types/react@19.3.0)(react@19.3.1)
+      storybook-addon-pseudo-states:
+        specifier: 10.6.3
+        version: 10.6.3(storybook@10.6.3(@types/react@19.3.0)(react@19.3.1))
       typescript:
         specifier: ~6.0.3
         version: 6.0.3
@@ -294,6 +300,9 @@ packages:
     engines: {node: '>=18'}
     cpu: [x64]
     os: [win32]
+
+  '@fontsource/inter@5.3.0':
+    resolution: {integrity: sha512-RofMylZmjlJEfELXeNHFWBRcSs75rGU/6bV2S2jfnvv/3rPXPGe0LgUJTklcHZ9lM4OZmAVFhcJPnACfb91A3g==}
 
   '@joshwooding/vite-plugin-react-docgen-typescript@0.7.0':
     resolution: {integrity: sha512-qvsTEwEFefhdirGOPnu9Wp6ChfIwy2dBCRuETU3uE+4cC+PFoxMSiiEhxk4lOluA34eARHA0OxqsEUYDqRMgeQ==}
@@ -1248,6 +1257,11 @@ packages:
     resolution: {integrity: sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==}
     engines: {node: '>=0.10.0'}
 
+  storybook-addon-pseudo-states@10.6.3:
+    resolution: {integrity: sha512-rTc+gfMGZfmp4jH2d6NnKy1iUcz+56bKiwZfw7M7eJJ2J7FTp9Zp8GxsmI6oBpeaJSnpWYRv9Z0U66rTqT54Qg==}
+    peerDependencies:
+      storybook: ^10.6.3
+
   storybook@10.6.3:
     resolution: {integrity: sha512-lNBvcZFG44C98KvQHYzfq1O46m+sl94zY1+na5/9E3ihtNMbvpOgYyMFMIcWYUvOMo3OM4q9jzvB73KU20bU8w==}
     hasBin: true
@@ -1608,6 +1622,8 @@ snapshots:
 
   '@esbuild/win32-x64@0.28.2':
     optional: true
+
+  '@fontsource/inter@5.3.0': {}
 
   '@joshwooding/vite-plugin-react-docgen-typescript@0.7.0(typescript@6.0.3)(vite@8.3.5(@types/node@24.19.2)(esbuild@0.28.2))':
     dependencies:
@@ -2438,6 +2454,10 @@ snapshots:
   source-map-js@1.2.2: {}
 
   source-map@0.6.1: {}
+
+  storybook-addon-pseudo-states@10.6.3(storybook@10.6.3(@types/react@19.3.0)(react@19.3.1)):
+    dependencies:
+      storybook: 10.6.3(@types/react@19.3.0)(react@19.3.1)
 
   storybook@10.6.3(@types/react@19.3.0)(react@19.3.1):
     dependencies:

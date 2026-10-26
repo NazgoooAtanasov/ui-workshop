@@ -105,11 +105,15 @@ test('approval dispatches the trusted main workflow with the exact reviewed inpu
   });
 });
 
-test('repeated approval returns the existing matching PR without another workflow', async () => {
-  const fetch = githubReplies([pull]);
-  const response = await handleApproval(request());
-  assert.deepEqual(await response.json(), { state: 'completed', prUrl });
-  assert.equal(fetch.mock.callCount(), 1);
+test('reviewing different stories of the same approved revision reuses one PR', async () => {
+  const fetch = githubReplies([pull], [pull]);
+  for (const story of ['default', 'disabled']) {
+    const response = await handleApproval(request('POST', {
+      ...input, previewUrl: `${new URL(input.previewUrl).origin}/?path=/story/components-input--${story}`,
+    }));
+    assert.deepEqual(await response.json(), { state: 'completed', prUrl });
+  }
+  assert.equal(fetch.mock.callCount(), 2);
 });
 
 test('running workflow status stays in Storybook', async () => {

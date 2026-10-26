@@ -23,6 +23,7 @@
     "**/*.css"
   ],
   "scripts": {
+    "test:approval": "node --test tests/*.test.mjs",
     "typecheck": "tsc --noEmit",
     "build:lib": "vite build && tsc -p tsconfig.build.json",
     "build": "pnpm run typecheck && pnpm run build:lib && pnpm run build-storybook",
@@ -48,6 +49,7 @@
     "storybook": "^10.6.3",
     "storybook-addon-pseudo-states": "10.6.3",
     "typescript": "~6.0.3",
-    "vite": "8.3.5"
+    "vite": "8.3.5",
+    "zod": "4.6.7"
   }
 }

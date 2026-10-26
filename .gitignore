@@ -4,6 +4,7 @@ storybook-static/
 *.tgz
 *.log
 .env.local
+.env.approval.local
 .vercel/
 
 *storybook.log

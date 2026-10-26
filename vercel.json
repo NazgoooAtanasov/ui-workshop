@@ -3,5 +3,8 @@
   "framework": null,
   "installCommand": "pnpm install --frozen-lockfile",
   "buildCommand": "pnpm build",
-  "outputDirectory": "storybook-static"
+  "outputDirectory": "storybook-static",
+  "functions": {
+    "api/approval.ts": { "maxDuration": 60 }
+  }
 }

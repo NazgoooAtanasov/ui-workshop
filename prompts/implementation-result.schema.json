@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "status": {
+      "type": "string",
+      "enum": ["implemented", "unchanged", "blocked"]
+    },
+    "branch": {
+      "type": "string"
+    },
+    "summary": {
+      "type": "string"
+    }
+  },
+  "required": ["status", "branch", "summary"],
+  "additionalProperties": false
+}

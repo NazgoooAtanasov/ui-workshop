@@ -1,0 +1,57 @@
+name: Figma To React
+
+on:
+    workflow_dispatch:
+        inputs:
+            figma_url:
+                description: URL to the figma design node
+                required: true
+                type: string
+
+jobs:
+    implement:
+        runs-on: ubuntu-latest
+        container: node:24-bookworm
+
+        steps:
+            - name: Install Git and GitHub CLI
+              run: |
+                apt-get update
+                apt-get install -y --no-install-recommends curl ca-certificates git
+
+                mkdir -p -m 755 /etc/apt/keyrings
+                curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg \
+                  -o /etc/apt/keyrings/githubcli-archive-keyring.gpg
+                chmod a+r /etc/apt/keyrings/githubcli-archive-keyring.gpg
+
+                printf 'deb [arch=%s signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main\n' \
+                  "$(dpkg --print-architecture)" \
+                  > /etc/apt/sources.list.d/github-cli.list
+
+                apt-get update
+                apt-get install -y --no-install-recommends gh
+                gh --version
+
+            - name: Set up pnpm
+              run: |
+                corepack enable pnpm
+                corepack install --global pnpm@10.15.1
+
+            - name: Clone the Repo
+              env:
+                GH_TOKEN: ${{ github.token }}
+                SOURCE_REPOSITORY: ${{ github.repository }}
+              run: |
+                gh auth setup-git --hostname github.com
+                git clone --branch main \
+                    "https://github.com/${SOURCE_REPOSITORY}.git" \
+                    "ui-workshop"
+
+            - name: Install Dependencies
+              working-directory: ui-workshop
+              run: pnpm install --frozen-lockfile
+
+            - name: Check codex
+              working-directory: ui-workshop
+              run: |
+                printf 'Codex version - %s\n' "$(pnpm exec codex --version)"

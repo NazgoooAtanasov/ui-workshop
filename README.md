@@ -85,7 +85,7 @@ The hosted Storybook is the review environment for future library changes.
 pnpm pack
 ```
 
-The `prepack` script builds the library before creating `poc-ui-0.1.0.tgz`.
+The `prepack` script builds the library before creating `poc-ui-0.1.1.tgz`.
 The archive contains the library's JavaScript, TypeScript declarations and CSS.
 React is supplied by the consumer through a peer dependency.
 

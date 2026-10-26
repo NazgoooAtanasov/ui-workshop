@@ -1,4 +1,5 @@
 import { createHash, timingSafeEqual } from 'node:crypto';
+import type { IncomingMessage, ServerResponse } from 'node:http';
 import { z } from 'zod';
 
 import {
@@ -52,7 +53,7 @@ async function findPullRequest(token: string, branch: string, sha: string) {
   return pulls.find((pull) => pull.body?.includes(approvalMarker(sha)));
 }
 
-async function handle(request: Request): Promise<Response> {
+export async function handleApproval(request: Request): Promise<Response> {
   const origin = request.headers.get('origin');
   const headers = new Headers({ 'Cache-Control': 'no-store', Vary: 'Origin' });
   const reply = (body: ApprovalResponse, status = 200) => Response.json(body, { status, headers });
@@ -145,4 +146,29 @@ async function handle(request: Request): Promise<Response> {
   }
 }
 
-export default { fetch: handle };
+type VercelRequest = IncomingMessage & { body?: unknown };
+
+export default async function approval(request: VercelRequest, response: ServerResponse) {
+  const headers = new Headers();
+  for (const [name, value] of Object.entries(request.headers)) {
+    if (Array.isArray(value)) value.forEach((entry) => headers.append(name, entry));
+    else if (value !== undefined) headers.set(name, value);
+  }
+  const method = request.method ?? 'GET';
+  let body: string | undefined;
+  try {
+    body = method === 'POST' ? JSON.stringify(request.body) : undefined;
+  } catch {
+    response.statusCode = 400;
+    response.setHeader('Content-Type', 'application/json');
+    response.setHeader('Cache-Control', 'no-store');
+    response.end(JSON.stringify({ state: 'failed', message: 'Invalid request JSON.' }));
+    return;
+  }
+  const result = await handleApproval(new Request(new URL(request.url ?? '/api/approval', productionOrigin), {
+    method, headers, body,
+  }));
+  response.statusCode = result.status;
+  result.headers.forEach((value, name) => response.setHeader(name, value));
+  response.end(await result.text());
+}

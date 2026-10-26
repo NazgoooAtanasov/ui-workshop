@@ -171,6 +171,7 @@ addons.register('workshop/approval', () => {
   addons.add('workshop/approval/tool', {
     type: types.TOOL,
     title: 'Review & approve',
+    match: ({ viewMode }) => viewMode === 'story',
     render: () => <ApprovalTool />,
   });
 });

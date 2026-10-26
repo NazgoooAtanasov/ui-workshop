@@ -10,8 +10,36 @@ proof of concept. This package is private and is installed from local archives.
 - File: `UUB3GeBjzTQFswVB4p7uQf`
 - Node: `9:330`
 
-The current Button is Storybook's setup sample. Implementing the selected Figma
-design is a separate step after the workshop and consumer are ready.
+The Button is implemented from this component's Figma MCP design context. The
+Storybook state matrix covers both variants, both sizes, and all four states.
+
+## Button contract
+
+```tsx
+import { Button } from '@poc/ui';
+import '@poc/ui/styles.css';
+
+<Button label="Continue" variant="primary" size="small" onClick={handleContinue} />;
+```
+
+- `label` is required. `variant` defaults to `primary`; `size` defaults to `small`.
+- Small: 36 px high, 16 px horizontal padding, 10 px corners, Inter Bold 14/20.
+- Medium: 48 px high, 24 px horizontal padding, 12 px corners, Inter Bold 16/24.
+- Native button props, including `disabled`, `type`, `aria-*`, and React 19 `ref`,
+  pass through. The default `type` is `button`, so it does not submit a form.
+- Hover transitions take 120 ms and respect reduced motion. Keyboard focus has
+  a 3 px lavender outline separated by a 2 px white gap, including while hovered.
+- Enter, Space, and click activate the supplied action once. Disabled buttons
+  cannot activate, receive hover feedback, or enter the Tab order.
+
+Hover and focus are browser states. The Storybook-only pseudo-state addon shows
+the 16 Figma combinations together without adding a forced-state component prop.
+The Keyboard and Pointer and Disabled stories contain executable interaction
+checks. Open the Interactions panel to inspect their assertions.
+
+Inter Bold is self-hosted from `@fontsource/inter` and included in the built CSS.
+Its OFL notice is in `public/licenses/Inter-OFL.txt`, copied into both builds.
+This implementation still needs Storybook approval before package handoff.
 
 ## Run locally
 
@@ -82,3 +110,6 @@ the stylesheet is exported as `@poc/ui/styles.css`.
 - [Storybook on Vercel](https://vercel.com/kb/guide/storybook-with-vercel)
 - [Vercel package managers and Corepack](https://vercel.com/docs/package-managers)
 - [Vercel deployment environments](https://vercel.com/docs/deployments/environments)
+- [Storybook pseudo-state previews](https://storybook.js.org/addons/storybook-addon-pseudo-states)
+- [Storybook interaction testing](https://storybook.js.org/docs/writing-tests/interaction-testing)
+- [Fontsource self-hosting](https://fontsource.org/docs/getting-started/install)

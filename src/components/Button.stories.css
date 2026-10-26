@@ -1,0 +1,42 @@
+.button-review {
+  overflow-x: auto;
+  padding: 8px;
+  color: #172238;
+  font-family: system-ui, sans-serif;
+}
+
+.button-review__matrix {
+  border-spacing: 24px;
+  white-space: nowrap;
+}
+
+.button-review__matrix caption {
+  padding: 8px;
+  text-align: left;
+  font-weight: 600;
+}
+
+.button-review__matrix th {
+  font-size: 14px;
+  font-weight: 600;
+  text-align: left;
+  text-transform: capitalize;
+}
+
+.button-review__matrix td {
+  padding: 8px;
+  text-align: center;
+}
+
+.button-review__form {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 24px;
+  padding: 16px;
+}
+
+.button-review__form input {
+  width: 120px;
+  padding: 8px;
+}

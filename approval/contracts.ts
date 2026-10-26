@@ -56,6 +56,14 @@ export type ReviewContext = {
   apiUrl: string;
 };
 
+export function isComponentDesignBranch(branch: string, componentName: string) {
+  const slug = componentName
+    .replace(/([a-z0-9])([A-Z])/g, '$1-$2')
+    .replace(/[^a-zA-Z0-9]+/g, '-')
+    .toLowerCase();
+  return designBranchSchema.safeParse(branch).success && branch.startsWith(`design/${slug}-`);
+}
+
 export function approvalMarker(sha: string) {
   return `<!-- ui-workshop-approval:${sha} -->`;
 }

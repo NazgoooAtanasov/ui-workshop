@@ -1,5 +1,6 @@
 .workshop-approval {
   max-width: 780px;
+  margin-block: 32px;
   padding: 24px;
   font-size: 13px;
   line-height: 1.5;
@@ -27,4 +28,3 @@
 .workshop-approval__notice,
 .workshop-approval__status p { border-radius: 6px; padding: 12px; }
 .workshop-approval .workshop-approval__footnote { margin: 20px 0 0; font-size: 12px; }
-.workshop-approval-tool { display: inline-flex; align-items: center; gap: 6px; border: 0; border-radius: 4px; background: transparent; padding: 6px 8px; font: inherit; font-size: 12px; font-weight: 700; cursor: pointer; }

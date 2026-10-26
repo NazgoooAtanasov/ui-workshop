@@ -20,7 +20,7 @@ const config: StorybookConfig = {
   ],
   staticDirs: ['../public'],
   framework: '@storybook/react-vite',
-  managerHead: (head) => `${head}<script>window.__WORKSHOP_REVIEW__=${JSON.stringify(context).replaceAll('<', '\\u003c')}</script>`,
+  previewHead: (head) => `${head}<script>window.__WORKSHOP_REVIEW__=${JSON.stringify(context).replaceAll('<', '\\u003c')}</script>`,
   core: {
     disableTelemetry: true,
   },

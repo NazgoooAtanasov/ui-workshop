@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { afterEach, beforeEach, mock, test } from 'node:test';
 
 import approvalHandler, { handleApproval } from '../api/approval.ts';
-import { approvalMarker, nextVersion, productionOrigin, releaseBranch } from '../approval/contracts.ts';
+import { approvalMarker, isComponentDesignBranch, nextVersion, productionOrigin, releaseBranch } from '../approval/contracts.ts';
 
 const key = 'fixture-reviewer-key-not-a-real-secret';
 const sha = 'a'.repeat(40);
@@ -159,6 +159,14 @@ test('version choices follow stable semver and reset lower components', () => {
   assert.equal(nextVersion('0.1.1', 'patch'), '0.1.2');
   assert.equal(nextVersion('0.1.1', 'minor'), '0.2.0');
   assert.equal(nextVersion('0.1.1', 'major'), '1.0.0');
+});
+
+test('component Docs can approve only their matching design branch', () => {
+  assert.equal(isComponentDesignBranch('design/input-add-field-states', 'Input'), true);
+  assert.equal(isComponentDesignBranch('design/input-add-field-states', 'Button'), false);
+  assert.equal(isComponentDesignBranch('design/button-change-primary-color', 'Button'), true);
+  assert.equal(isComponentDesignBranch('design/button-change-primary-color', 'Input'), false);
+  assert.equal(isComponentDesignBranch('main', 'Input'), false);
 });
 
 test('Vercel HTTP entrypoint forwards parsed JSON and writes the approval response', async () => {

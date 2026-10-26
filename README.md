@@ -116,9 +116,11 @@ The hosted Storybook is the review environment for future library changes.
 
 ## Approve a design in Storybook
 
-Open the latest deployed `design/…` branch preview and select **Review & approve**
-in the toolbar or addon panel. Confirm the branch and commit, choose a version
-bump, enter the reviewer access key, and approve the revision. The panel follows
+Open the latest deployed `design/…` branch preview and select the changed
+component's **Docs** page. Review its examples and states, then scroll to the
+**Approve Input** or **Approve Button** section at the end of the page. Confirm
+the branch and commit, choose a version bump, enter the reviewer access key,
+and approve the component revision. The approval section follows
 the release workflow and shows the resulting PR link. The final approval stays
 inside Storybook; GitHub does not require another confirmation click.
 
@@ -127,7 +129,10 @@ pilot, keep each component change on its own design branch and review all of its
 stories before approving. Approval covers the entire branch revision and creates
 one release PR with one version bump for the whole `@poc/ui` package. You can
 iterate on the component across multiple commits before requesting that release.
-The approval panel follows Storybook's active manager theme, including dark mode.
+Approval is offered only on the Docs page matching the component prefix in the
+design branch name. For example, `design/input-add-field-states` is approved on
+Input's Docs page, not Button's. Individual stories have no approval controls.
+The approval section follows the active Docs theme, including dark mode.
 
 The production `/api/approval` function dispatches `approve-design.yml` on `main`.
 The workflow verifies the exact approved commit, builds it, adds a version-only

@@ -39,7 +39,7 @@ checks. Open the Interactions panel to inspect their assertions.
 
 Inter Bold is self-hosted from `@fontsource/inter` and included in the built CSS.
 Its OFL notice is in `public/licenses/Inter-OFL.txt`, copied into both builds.
-This implementation still needs Storybook approval before package handoff.
+Library changes require Storybook approval before package handoff.
 
 ## Run locally
 

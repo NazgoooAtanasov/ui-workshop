@@ -38,9 +38,44 @@ the 16 Figma combinations together without adding a forced-state component prop.
 The Keyboard and Pointer and Disabled stories contain executable interaction
 checks. Open the Interactions panel to inspect their assertions.
 
-Inter Bold is self-hosted from `@fontsource/inter` and included in the built CSS.
+Inter Regular and Bold are self-hosted from `@fontsource/inter` and included in
+the built CSS.
 Its OFL notice is in `public/licenses/Inter-OFL.txt`, copied into both builds.
 Library changes require Storybook approval before package handoff.
+
+## Input contract
+
+The [Figma Input selection](https://www.figma.com/design/UUB3GeBjzTQFswVB4p7uQf/figma-to-react-poc?node-id=19-41)
+defines Default, Hover, Focus, and Disabled states.
+
+```tsx
+import { Input } from '@poc/ui';
+import '@poc/ui/styles.css';
+
+<Input
+  label="Email address"
+  type="email"
+  name="email"
+  placeholder="you@example.com"
+  hint="Use your work email address."
+/>;
+```
+
+- `label` is required and associated with the native input. Optional `hint` text
+  is connected through `aria-describedby`, alongside any caller-supplied description.
+- Starts empty; `placeholder` is not a value. Native `value`, `defaultValue`,
+  `onChange`, `disabled`, `id`, and React 19 `ref` pass through to the input.
+- The wrapper defaults to 320 px wide and fits narrower containers. `className`
+  applies to the wrapper for resizing. Label and hint wrap with the available width.
+- The control is 48 px high with 16 px horizontal padding and 12 px corners.
+  Label: Inter Bold 14/20; field: Inter Regular 16/24; hint: Inter Regular 12/20.
+- Hover uses a black border and `#FAFAFA` fill. Focus takes precedence, with a
+  `#F5F3FF` fill and 3 px lavender ring separated by a 2 px white gap.
+- Fill and border transitions take 120 ms and respect reduced motion. Disabled
+  inputs cannot be edited, focused, or reached by Tab.
+
+The Input stories include the four-state Figma preview, filled and resizable
+examples, and executable Keyboard and Pointer and Disabled interaction checks.
 
 ## Run locally
 

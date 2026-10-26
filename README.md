@@ -79,6 +79,44 @@ The Vercel project connects to this GitHub repository. Pushes to `main` deploy
 the production Storybook; other branches receive preview deployments.
 The hosted Storybook is the review environment for future library changes.
 
+## Approve a design in Storybook
+
+Open the latest deployed `design/…` branch preview and select **Review & approve**
+in the toolbar or addon panel. Confirm the branch and commit, choose a version
+bump, enter the reviewer access key, and approve the revision. The panel follows
+the release workflow and shows the resulting PR link. The final approval stays
+inside Storybook; GitHub does not require another confirmation click.
+
+The production `/api/approval` function dispatches `approve-design.yml` on `main`.
+The workflow verifies the exact approved commit, builds it, adds a version-only
+commit on a release branch derived from that revision, and opens a PR to `main`.
+The approved design branch stays untouched. A changed branch requires
+another review. Repeated approval reuses its PR, and another release waits until
+the open release PR is merged or closed. Nothing is packed, published, or merged
+by the approval workflow. Release logic lives in `scripts/approve-design.mjs`.
+
+Configure these **Production-only** Vercel environment variables before using
+approval, then deploy again:
+
+- `APPROVAL_GITHUB_TOKEN`: a fine-grained token scoped only to this repository,
+  with Actions write, Contents read, and Pull requests read permissions.
+- `APPROVAL_ACCESS_KEY`: a private reviewer passphrase of at least 16 characters.
+
+You can add the values directly in Vercel's project settings without sharing
+them with an agent. `.env.approval.example` is a blank template for preparing
+them in a local `.env.approval.local` file, which is gitignored. Local files do
+not automatically configure Vercel. The public Storybook build contains neither
+secret. Preview deployments use the protected production API, so credentials
+are not provided to branch builds. This pilot uses one reviewer key; sharing it
+grants the same approval access.
+
+The repository must allow GitHub Actions to create pull requests. The release
+workflow requests Contents write and Pull requests write for its built-in token;
+the original Figma implementation workflow is unchanged.
+
+Run `pnpm test:approval` to verify the service and release controller without
+calling GitHub or creating a real pull request.
+
 ## Package locally
 
 ```sh
@@ -105,6 +143,10 @@ the stylesheet is exported as `@poc/ui/styles.css`.
 ## Official documentation
 
 - [React with Vite in Storybook](https://storybook.js.org/docs/get-started/frameworks/react-vite)
+- [Storybook addon UI](https://storybook.js.org/docs/addons/addon-types)
+- [Vercel Functions](https://vercel.com/docs/functions)
+- [Vercel environment variables](https://vercel.com/docs/environment-variables)
+- [GitHub workflow dispatch API](https://docs.github.com/en/rest/actions/workflows#create-a-workflow-dispatch-event)
 - [Vite library mode](https://vite.dev/guide/build#library-mode)
 - [pnpm pack](https://pnpm.io/10.x/cli/pack)
 - [Figma remote MCP setup](https://developers.figma.com/docs/figma-mcp-server/remote-server-installation/)

@@ -1,0 +1,39 @@
+.workshop-approval {
+  max-width: 780px;
+  padding: 24px;
+  color: #263248;
+  font-family: system-ui, sans-serif;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.workshop-approval h2 { margin: 0; font-size: 18px; }
+.workshop-approval p { margin: 8px 0 16px; }
+.workshop-approval a { color: #3156c8; text-underline-offset: 3px; }
+.workshop-approval__header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+.workshop-approval__badge { border-radius: 6px; background: #eef2ff; padding: 4px 8px; white-space: nowrap; }
+.workshop-approval__revision { display: flex; flex-wrap: wrap; gap: 16px 32px; border-block: 1px solid #e2e7ef; padding: 16px 0; }
+.workshop-approval__revision dt { color: #667085; font-size: 12px; }
+.workshop-approval__revision dd { margin: 2px 0 0; overflow-wrap: anywhere; }
+.workshop-approval fieldset { display: grid; gap: 16px; border: 0; margin: 0; padding: 0; }
+.workshop-approval__field { display: grid; gap: 6px; max-width: 440px; font-weight: 600; }
+.workshop-approval__field input,
+.workshop-approval__field select { box-sizing: border-box; width: 100%; border: 1px solid #c9d2df; border-radius: 6px; background: #fff; color: inherit; padding: 9px 12px; font: inherit; }
+.workshop-approval .workshop-approval__version { margin: -8px 0 0; color: #667085; }
+.workshop-approval__confirmation { display: flex; align-items: flex-start; gap: 8px; }
+.workshop-approval__confirmation input { margin-top: 3px; }
+.workshop-approval__submit { justify-self: start; border: 0; border-radius: 6px; background: #252b3b; color: #fff; padding: 10px 16px; font: inherit; font-weight: 700; cursor: pointer; }
+.workshop-approval__submit:disabled { opacity: .5; cursor: default; }
+.workshop-approval__status:empty { display: none; }
+.workshop-approval__status { margin-top: 20px; }
+.workshop-approval__notice,
+.workshop-approval__status p { border-radius: 6px; background: #f3f5f9; padding: 12px; }
+.workshop-approval__status .workshop-approval__success { background: #eaf7ef; color: #175b32; }
+.workshop-approval__status .workshop-approval__error { background: #fff0ed; color: #8c2d23; }
+.workshop-approval .workshop-approval__footnote { margin: 20px 0 0; color: #667085; font-size: 12px; }
+.workshop-approval input:focus-visible,
+.workshop-approval select:focus-visible,
+.workshop-approval button:focus-visible,
+.workshop-approval-tool:focus-visible { outline: 2px solid #3156c8; outline-offset: 3px; }
+.workshop-approval-tool { display: inline-flex; align-items: center; gap: 6px; border: 0; border-radius: 4px; background: transparent; color: inherit; padding: 6px 8px; font: inherit; font-size: 12px; font-weight: 700; cursor: pointer; }
+.workshop-approval-tool:hover { background: #edf2f7; }

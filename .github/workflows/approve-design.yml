@@ -1,0 +1,87 @@
+name: Approve design
+run-name: Approve ${{ inputs.design_branch }} @ ${{ inputs.approved_sha }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      design_branch:
+        description: Design branch reviewed in Storybook
+        required: true
+        type: string
+      approved_sha:
+        description: Exact implementation commit reviewed in Storybook
+        required: true
+        type: string
+      bump:
+        description: Package version bump
+        required: true
+        type: choice
+        options: [patch, minor, major]
+      preview_url:
+        description: Storybook deployment used for review
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: ui-workshop-release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    if: github.ref_name == github.event.repository.default_branch
+    runs-on: ubuntu-latest
+    container: node:24-bookworm
+    steps:
+      - name: Install Git and GitHub CLI
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends curl ca-certificates git
+          mkdir -p -m 755 /etc/apt/keyrings
+          curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg \
+            -o /etc/apt/keyrings/githubcli-archive-keyring.gpg
+          chmod a+r /etc/apt/keyrings/githubcli-archive-keyring.gpg
+          printf 'deb [arch=%s signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main\n' \
+            "$(dpkg --print-architecture)" > /etc/apt/sources.list.d/github-cli.list
+          apt-get update
+          apt-get install -y --no-install-recommends gh
+
+      - name: Set up pnpm
+        run: |
+          corepack enable pnpm
+          corepack install --global pnpm@10.15.1
+
+      - name: Clone the workshop
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_REPOSITORY: ${{ github.repository }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+        run: |
+          gh auth setup-git --hostname github.com
+          git clone --branch "$DEFAULT_BRANCH" "https://github.com/${SOURCE_REPOSITORY}.git" ui-workshop
+          git -C ui-workshop config user.name 'github-actions[bot]'
+          git -C ui-workshop config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+
+      - name: Install release tooling
+        working-directory: ui-workshop
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm test:approval
+
+      - name: Prepare the approved release PR
+        working-directory: ui-workshop
+        env:
+          GH_TOKEN: ${{ github.token }}
+          DESIGN_BRANCH: ${{ inputs.design_branch }}
+          APPROVED_SHA: ${{ inputs.approved_sha }}
+          VERSION_BUMP: ${{ inputs.bump }}
+          PREVIEW_URL: ${{ inputs.preview_url }}
+        run: |
+          node scripts/approve-design.mjs \
+            --design-branch "$DESIGN_BRANCH" \
+            --approved-sha "$APPROVED_SHA" \
+            --bump "$VERSION_BUMP" \
+            --preview-url "$PREVIEW_URL"

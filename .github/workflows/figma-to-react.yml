@@ -12,7 +12,13 @@ jobs:
     implement:
         if: github.ref == 'refs/heads/main'
         runs-on: ubuntu-latest
-        container: node:24-bookworm
+        container:
+            image: node:24-bookworm
+            # Let Bubblewrap create Codex's inner workspace-write sandbox.
+            options: >-
+                --cap-add=SYS_ADMIN
+                --security-opt seccomp=unconfined
+                --security-opt apparmor=unconfined
         environment: figma-ci
         concurrency:
             group: figma-mcp-credentials
@@ -21,10 +27,10 @@ jobs:
             contents: write
 
         steps:
-            - name: Install Git and GitHub CLI
+            - name: Install Git, GitHub CLI, and Bubblewrap
               run: |
                 apt-get update
-                apt-get install -y --no-install-recommends curl ca-certificates git
+                apt-get install -y --no-install-recommends curl ca-certificates git bubblewrap
 
                 mkdir -p -m 755 /etc/apt/keyrings
                 curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg \
@@ -59,6 +65,18 @@ jobs:
             - name: Install Dependencies
               working-directory: ui-workshop
               run: pnpm install --frozen-lockfile
+
+            - name: Verify Codex sandbox
+              env:
+                CODEX_HOME: ${{ runner.temp }}/figma-codex
+              working-directory: ui-workshop
+              run: |
+                mkdir -p "$CODEX_HOME"
+                pnpm exec codex sandbox -c 'sandbox_mode="workspace-write"' -- sh -eu -c '
+                  test -r package.json
+                  touch .codex-sandbox-check
+                  rm .codex-sandbox-check
+                '
 
             - name: Restore Figma MCP credentials
               id: figma_auth

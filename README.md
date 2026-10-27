@@ -117,6 +117,13 @@ environment secret. GitHub reads environment secrets when a job starts; this
 lets a queued job receive credentials refreshed by the previous job. The
 workflow's shared concurrency group prevents simultaneous refreshes.
 
+The Node job container installs Bubblewrap and grants its sandbox launcher
+`SYS_ADMIN` with container-scoped seccomp and AppArmor allowances. Codex still
+runs with `workspace-write`; its inner sandbox restricts filesystem writes and
+drops Linux capabilities. **Verify Codex sandbox** checks repository reads and
+workspace writes before loading Figma credentials or starting a paid model run.
+These container options are specific to the implementation job.
+
 | Secret | Location in ui-workshop | Purpose |
 | --- | --- | --- |
 | `CODEX_API_KEY` | Settings → Secrets and variables → Actions → Repository secrets | Existing OpenAI API key; unchanged. |

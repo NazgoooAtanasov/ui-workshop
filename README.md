@@ -77,6 +77,33 @@ import '@poc/ui/styles.css';
 The Input stories include the four-state Figma preview, filled and resizable
 examples, and executable Keyboard and Pointer and Disabled interaction checks.
 
+## Select contract
+
+The [Figma Select selection](https://www.figma.com/design/UUB3GeBjzTQFswVB4p7uQf/figma-to-react-poc?node-id=30-11)
+defines Default, Hover, Focus, and Disabled states.
+
+```tsx
+import { Select } from '@poc/ui';
+import '@poc/ui/styles.css';
+
+<Select label="Country" name="country" hint="Choose your country of residence.">
+  <option value="bg">Bulgaria</option>
+  <option value="de">Germany</option>
+</Select>;
+```
+
+- Uses a native single-select with an associated label and optional described hint.
+  Supply native option or optgroup children with non-empty option values.
+- Starts with an empty value and the prompt `Select a country`; customize the
+  prompt with `placeholder`. Both controlled `value` and uncontrolled `defaultValue`
+  are supported, alongside native props, events, disabled behavior, and React 19 ref.
+- Matches Input's 320 px flexible width, 48 px control, typography, colors,
+  focus ring, and reduced-motion behavior. `className` applies to the wrapper.
+  The decorative chevron uses the local 20 × 20 Figma SVGs.
+- The option menu and keyboard selection follow the browser and platform.
+  Storybook includes the four-state preview, selected, controlled, resizable,
+  and interaction-check examples.
+
 ## Run locally
 
 Use Node 24 and pnpm 10.15.1. The repository includes `.nvmrc` and pins pnpm in

@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, fn } from 'storybook/test';
 
 import { Input } from '../index';
-import './Input.stories.css';
 
 const meta = {
   title: 'Components/Input',
@@ -27,6 +26,7 @@ const meta = {
       options: ['text', 'email', 'password', 'search', 'tel', 'url'],
     },
     className: { control: false },
+    controlClassName: { control: false },
     ref: { control: false },
     onChange: { control: false },
   },
@@ -71,7 +71,7 @@ export const StateMatrix: Story = {
     },
   },
   render: (args) => (
-    <div className="input-review__states">
+    <div className="box-border flex flex-col gap-space-32 w-[360px] max-w-full p-space-20">
       {states.map((state) => (
         <div key={state} role="group" aria-label={`${state} state`}>
           <Input
@@ -90,7 +90,7 @@ export const Filled: Story = {
 };
 
 export const FlexibleWidth: Story = {
-  args: { className: 'input-review__fluid' },
+  args: { className: 'w-full' },
   parameters: {
     layout: 'padded',
     docs: {
@@ -101,7 +101,7 @@ export const FlexibleWidth: Story = {
     },
   },
   render: (args) => (
-    <div className="input-review__resizable">
+    <div className="box-border w-hero-compact-width min-w-[200px] max-w-full p-space-8 overflow-auto resize-x">
       <Input {...args} />
     </div>
   ),
@@ -119,7 +119,7 @@ export const KeyboardAndPointer: Story = {
     },
   },
   render: (args) => (
-    <div className="input-review__interaction">
+    <div className="flex flex-col items-start gap-space-24 p-space-8 [&>p]:m-0">
       <button type="button">Before input</button>
       <Input {...args} />
       <p id="email-policy">Your email stays private.</p>
@@ -164,7 +164,7 @@ export const Disabled: Story = {
     },
   },
   render: (args) => (
-    <div className="input-review__interaction">
+    <div className="flex flex-col items-start gap-space-24 p-space-8 [&>p]:m-0">
       <button type="button">Before input</button>
       <Input {...args} />
       <button type="button">After input</button>

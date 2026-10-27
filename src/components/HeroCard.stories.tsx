@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, fn } from 'storybook/test';
 import { HeroCard } from '../index';
-import './HeroCard.stories.css';
 
 const meta = {
   title: 'Components/HeroCard',
@@ -37,7 +36,7 @@ export const Dark: Story = { args: { variant: 'dark' } };
 export const StyleMatrix: Story = {
   parameters: { layout: 'padded', controls: { include: ['eyebrow', 'heading', 'description', 'buttonProps'] } },
   render: (args) => (
-    <div className="hero-card-review__variants">
+    <div className="grid grid-cols-[repeat(2,minmax(0,640px))] items-start gap-x-[80px] gap-y-[120px] p-space-20 [@media(max-width:900px)]:grid-cols-[minmax(0,640px)] [@media(max-width:900px)]:gap-space-32">
       {(['default', 'tinted', 'compact', 'dark'] as const).map((variant) => (
         <HeroCard {...args} key={variant} variant={variant} />
       ))}
@@ -46,7 +45,7 @@ export const StyleMatrix: Story = {
 };
 export const FlexibleWidth: Story = {
   parameters: { layout: 'padded' },
-  render: (args) => <div className="hero-card-review__resizable"><HeroCard {...args} /></div>,
+  render: (args) => <div className="w-hero-width min-w-[200px] max-w-full overflow-auto resize-x"><HeroCard {...args} /></div>,
 };
 export const ButtonOverrides: Story = {
   args: { buttonProps: { label: 'Explore the possibilities', variant: 'secondary', size: 'small', onClick: fn() } },
@@ -69,7 +68,7 @@ export const KeyboardAndPointer: Story = {
 export const Disabled: Story = {
   args: { variant: 'dark', buttonProps: { disabled: true, onClick: fn() } },
   render: (args) => (
-    <div className="hero-card-review__interaction">
+    <div className="flex flex-col items-start gap-space-16">
       <button type="button">Before card</button>
       <HeroCard {...args} />
       <button type="button">After card</button>

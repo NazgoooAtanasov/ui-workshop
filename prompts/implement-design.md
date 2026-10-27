@@ -13,9 +13,23 @@ repository, create a temporary checkout or worktree, switch branches, commit,
 push, or attempt GitHub authentication. A read-only `.git` directory is expected;
 it does not prevent you from editing the working files.
 
-Update the corresponding React component, styles, and Storybook stories to match the
-design and its variants. Reuse this project's React, TypeScript, plain CSS, assets,
-and conventions. Preserve existing public props, native keyboard/pointer behavior,
+Update the corresponding React component and Storybook stories to match the
+design and its variants. Reuse this project's React, TypeScript, Tailwind theme,
+assets, and conventions. Read `tokens/theme.tokens.json` and use the generated
+semantic utility classes for design values. Fetch the selection's variable
+definitions and map its bound variables by identity and role, not just equal values.
+Use complete utility strings in variant/size maps so Tailwind can detect them;
+do not construct class names with interpolation. Do not add handwritten component
+CSS or `.poc-*` styling classes. Calculations may reference existing token variables.
+
+Every public visual component must accept `className` on its root and merge it
+last through the shared `cn` helper (`clsx` plus the theme-aware `tailwind-merge`).
+Keep existing native-field `controlClassName` and nested component overrides.
+If a token mapping is missing, report it explicitly; do not invent a hardcoded
+replacement or silently change a shared token. An authorized shared token update
+must include all affected components in the Foundations/Theme review scope.
+
+Preserve existing public props, native keyboard/pointer behavior,
 disabled behavior, accessibility, and the CSS-free public declaration entry.
 Keep TypeScript contracts precise and validate untyped input only at its boundary.
 Keep changes focused on the selected component; preserve unrelated work.

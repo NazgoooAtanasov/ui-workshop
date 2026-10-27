@@ -23,13 +23,16 @@
     "**/*.css"
   ],
   "scripts": {
-    "test:approval": "node --test tests/*.test.mjs",
-    "typecheck": "tsc --noEmit",
-    "build:lib": "vite build && tsc -p tsconfig.build.json",
+    "test:approval": "pnpm tokens:build && node --test tests/*.test.mjs",
+    "typecheck": "pnpm tokens:build && tsc --noEmit",
+    "build:lib": "pnpm tokens:build && vite build && tsc -p tsconfig.build.json",
     "build": "pnpm run typecheck && pnpm run build:lib && pnpm run build-storybook",
     "prepack": "pnpm run build:lib",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "storybook": "pnpm tokens:build && storybook dev -p 6006",
+    "build-storybook": "pnpm tokens:build && storybook build",
+    "tokens:build": "node scripts/tokens.ts",
+    "tokens:import": "node scripts/tokens.ts --import",
+    "test:styles": "pnpm build-storybook && playwright test"
   },
   "peerDependencies": {
     "react": "^19.0.0"
@@ -37,9 +40,11 @@
   "devDependencies": {
     "@fontsource/inter": "5.3.0",
     "@openai/codex": "^0.164.0",
+    "@playwright/test": "1.64.1",
     "@storybook/addon-a11y": "^10.6.3",
     "@storybook/addon-docs": "^10.6.3",
     "@storybook/react-vite": "^10.6.3",
+    "@tailwindcss/vite": "^4.3.3",
     "@types/node": "24.19.2",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
@@ -48,8 +53,13 @@
     "react-dom": "19.3.1",
     "storybook": "^10.6.3",
     "storybook-addon-pseudo-states": "10.6.3",
+    "tailwindcss": "^4.3.3",
     "typescript": "~6.0.3",
     "vite": "8.3.5",
     "zod": "4.6.7"
+  },
+  "dependencies": {
+    "clsx": "2.1.1",
+    "tailwind-merge": "3.7.0"
   }
 }

@@ -1,6 +1,9 @@
 node_modules/
 dist/
 storybook-static/
+src/generated/
+playwright-report/
+test-results/
 *.tgz
 *.log
 .env.local

@@ -1,4 +1,6 @@
 import { useId, type ComponentProps } from 'react';
+import { cn } from '../cn.js';
+import { fieldStyles } from './fieldStyles.js';
 
 export type SelectProps = Omit<
   ComponentProps<'select'>,
@@ -14,6 +16,8 @@ export type SelectProps = Omit<
   defaultValue?: string | number;
   /** Applied to the field wrapper to customize its layout and width. */
   className?: string;
+  /** Applied to the native select after its default utility classes. */
+  controlClassName?: string;
 };
 
 /** The Figma single-select field, with native options and interactions. */
@@ -24,6 +28,7 @@ export const Select = ({
   id,
   disabled,
   className,
+  controlClassName,
   children,
   defaultValue = '',
   'aria-describedby': describedBy,
@@ -34,29 +39,48 @@ export const Select = ({
   const hintId = `${selectId}-hint`;
 
   return (
-    <div
-      className={['poc-select', disabled && 'poc-select--disabled', className]
-        .filter(Boolean)
-        .join(' ')}
-    >
-      <label className="poc-select__label" htmlFor={selectId}>
+    <div className={cn(fieldStyles.wrapper, className)}>
+      <label
+        className={cn(fieldStyles.label, disabled && 'text-action-disabled-text')}
+        htmlFor={selectId}
+      >
         {label}
       </label>
-      <select
-        {...selectProps}
-        defaultValue={selectProps.value === undefined ? defaultValue : undefined}
-        id={selectId}
-        className="poc-select__control"
-        disabled={disabled}
-        aria-describedby={
-          [describedBy, hint ? hintId : undefined].filter(Boolean).join(' ') || undefined
-        }
-      >
-        <option value="">{placeholder}</option>
-        {children}
-      </select>
+      <div className="relative">
+        <select
+          {...selectProps}
+          defaultValue={selectProps.value === undefined ? defaultValue : undefined}
+          id={selectId}
+          className={cn(
+            fieldStyles.control,
+            'pr-[calc(var(--poc-layout-control-padding-inline)+var(--poc-size-icon-size)+var(--poc-layout-control-gap))]',
+            'has-[option[value=""]:checked]:text-text-secondary disabled:has-[option[value=""]:checked]:text-text-disabled',
+            '[&_option]:bg-surface-default [&_option]:text-text-primary',
+            controlClassName,
+          )}
+          disabled={disabled}
+          aria-describedby={
+            [describedBy, hint ? hintId : undefined].filter(Boolean).join(' ') || undefined
+          }
+        >
+          <option value="">{placeholder}</option>
+          {children}
+        </select>
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 20 20"
+          fill="none"
+          stroke="currentColor"
+          className={cn(
+            'pointer-events-none absolute right-control-padding-inline top-1/2 -translate-y-1/2 size-icon-size text-text-primary [stroke-width:var(--poc-size-icon-stroke)]',
+            disabled && 'text-text-disabled',
+          )}
+        >
+          <path d="M5 7.5L10 12.5L15 7.5" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </div>
       {hint && (
-        <p className="poc-select__hint" id={hintId}>
+        <p className={fieldStyles.hint} id={hintId}>
           {hint}
         </p>
       )}

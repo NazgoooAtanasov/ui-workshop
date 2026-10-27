@@ -101,6 +101,98 @@ pnpm build-storybook
 `pnpm build` runs all three checks. The library is written to `dist/`, and the
 static Storybook site is written to `storybook-static/`.
 
+## Implement Figma changes in GitHub Actions
+
+Run **Actions → Figma To React → Run workflow** on `main` with a Figma selection
+URL containing `node-id`. The workflow uses the OpenAI API for Codex billing,
+reads the design through the official Figma MCP server, and pushes a
+`design/<component>-<change-description>` branch for Vercel's Storybook preview.
+Storybook approval and the release/version PR remain separate human-driven steps.
+
+### One-time Figma OAuth setup
+
+The GitHub environment **`figma-ci`** is configured for this repository and
+allows only the `main` branch. It stores the refreshable Figma login as an
+environment secret. GitHub reads environment secrets when a job starts; this
+lets a queued job receive credentials refreshed by the previous job. The
+workflow's shared concurrency group prevents simultaneous refreshes.
+
+| Secret | Location in ui-workshop | Purpose |
+| --- | --- | --- |
+| `CODEX_API_KEY` | Settings → Secrets and variables → Actions → Repository secrets | Existing OpenAI API key; unchanged. |
+| `FIGMA_CREDENTIALS_WRITE_TOKEN` | Settings → Secrets and variables → Actions → Repository secrets | GitHub token used by the auth helper to save refreshed credentials. |
+| `FIGMA_MCP_CREDENTIALS` | Settings → Environments → figma-ci → Environment secrets | Full Figma MCP OAuth credential entry, seeded by the upload command below. |
+
+1. Create a **fine-grained GitHub personal access token**, owned by
+   `NazgoooAtanasov`, with repository access limited to **ui-workshop** and
+   **Repository permissions → Environments: Read and write**. Metadata read
+   access is automatic. This token needs no Contents or Actions write access.
+   Add it as the repository secret `FIGMA_CREDENTIALS_WRITE_TOKEN`, either in
+   GitHub settings or with the CLI's hidden prompt:
+
+   ```sh
+   gh secret set FIGMA_CREDENTIALS_WRITE_TOKEN --repo NazgoooAtanasov/ui-workshop
+   ```
+
+2. From the local `ui-workshop` directory, with Node 24, pnpm, and an authenticated
+   GitHub CLI, install dependencies and authorize a dedicated Figma MCP login:
+
+   ```sh
+   pnpm install --frozen-lockfile
+   node scripts/figma-mcp-auth.mjs login
+   ```
+
+   Complete Figma's browser sign-in and allow access. The helper uses the installed
+   Codex CLI and an isolated file-backed home at
+   `~/.codex/ui-workshop-figma-ci`. It leaves your normal Codex login and MCP
+   credentials separate. No OpenAI API call is needed for this authorization.
+
+3. Seed the environment secret without copying credentials into chat, terminal
+   output, or the repository:
+
+   ```sh
+   node scripts/figma-mcp-auth.mjs upload
+   ```
+
+   The helper uploads only the official Figma MCP entry, including its refresh
+   token and client registration information. Other MCP logins are excluded.
+   You do not need `FIGMA_OAUTH_TOKEN` for this workflow.
+
+4. Once these workflow changes are on `main`, run **Figma To React** with the
+   desired selection URL. Check that **Restore Figma MCP credentials** succeeds
+   and **Save refreshed Figma MCP credentials** either saves the login or reports
+   that it is unchanged. Then review the design branch's Storybook preview.
+
+### How credential refresh works
+
+The standalone `scripts/figma-mcp-auth.mjs` helper has `login`, `upload`, `restore`,
+and `save` commands. `--home <directory>` selects a dedicated Codex home; CI uses
+one under the runner's temporary directory, outside the repository. `restore`
+writes private credential files and configures Codex's OAuth file store. Codex
+handles OAuth refresh while connecting to Figma. `save` persists changed
+credentials to the environment secret through GitHub CLI's encrypted secret API.
+
+The workflow attempts to save even if implementation or the build fails, then
+removes the temporary credential directory. An unchanged login is not uploaded
+again. The persistence helper is copied outside the agent's writable checkout
+before implementation, and the secret-writing token is provided only to auth
+steps. Codex receives its API key and the dedicated OAuth home; Git and the
+launcher's build command receive neither the API key nor credential environment
+variables. Access and refresh tokens are explicitly masked in Actions logs.
+Credentials are never stored as workflow artifacts or committed files.
+
+Use this dedicated authorization only through CI after seeding it. If Figma
+revokes the grant, the write token expires, or a runner is forcibly terminated
+before saving a rotated login, the workflow will need attention. Fix the token
+permissions if necessary, then repeat `login` and `upload` while no Figma job is
+running. A failed save fails the job and does not print the credential contents.
+
+Official references: [Figma MCP setup](https://developers.figma.com/docs/figma-mcp-server/remote-server-installation/#set-up-the-codex-cli),
+[Codex MCP OAuth](https://learn.chatgpt.com/docs/extend/mcp#streamable-http-servers),
+[fine-grained GitHub tokens](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token),
+[environment secret permissions](https://docs.github.com/en/rest/actions/secrets#create-or-update-an-environment-secret),
+and [when GitHub reads secrets](https://docs.github.com/en/actions/reference/security/secrets#when-github-actions-reads-secrets).
+
 ## Vercel hosting
 
 [Live Storybook](https://ui-workshop-five.vercel.app) ·

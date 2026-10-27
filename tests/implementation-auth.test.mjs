@@ -43,7 +43,7 @@ for (const withApiKey of [true, false]) {
     command(checkout, 'git', ['config', 'user.email', 'implementation@example.invalid']);
     for (const hook of ['pre-commit', 'pre-push']) {
       const path = join(checkout, '.git/hooks', hook);
-      writeFileSync(path, '#!/bin/sh\n[ -z "$CODEX_API_KEY$OPENAI_API_KEY" ] || exit 97\n');
+      writeFileSync(path, '#!/bin/sh\n[ -z "$CODEX_API_KEY$OPENAI_API_KEY$CODEX_HOME$FIGMA_OAUTH_TOKEN$FIGMA_MCP_CREDENTIALS$FIGMA_CREDENTIALS_WRITE_TOKEN" ] || exit 97\n');
       chmodSync(path, 0o755);
     }
     writeFileSync(join(bin, 'package.json'), '{"type":"module"}\n');
@@ -55,11 +55,19 @@ const args=process.argv.slice(2);
 if(args[0]==='exec' && args[1]==='codex') {
  assert.equal(process.env.CODEX_API_KEY,process.env.AUTH_TEST_HAS_KEY==='true'?'fixture-codex-key':undefined);
  assert.equal(process.env.OPENAI_API_KEY,process.env.AUTH_TEST_HAS_KEY==='true'?'fixture-openai-key':undefined);
+ assert.equal(process.env.CODEX_HOME,join(process.env.AUTH_TEST_ROOT,'codex'));
+ assert.equal(process.env.FIGMA_OAUTH_TOKEN,'fixture-figma-token');
+ assert.equal(process.env.FIGMA_MCP_CREDENTIALS,undefined);
+ assert.equal(process.env.FIGMA_CREDENTIALS_WRITE_TOKEN,undefined);
  writeFileSync('Implemented.tsx','export const Button = () => null;\\n');
  writeFileSync(args[args.indexOf('--output-last-message')+1],JSON.stringify({status:'implemented',branch:'design/button-auth-test',summary:'Implement fixture Button'}));
 } else if(args[0]==='build') {
  assert.equal(process.env.CODEX_API_KEY,undefined);
  assert.equal(process.env.OPENAI_API_KEY,undefined);
+ assert.equal(process.env.CODEX_HOME,undefined);
+ assert.equal(process.env.FIGMA_OAUTH_TOKEN,undefined);
+ assert.equal(process.env.FIGMA_MCP_CREDENTIALS,undefined);
+ assert.equal(process.env.FIGMA_CREDENTIALS_WRITE_TOKEN,undefined);
  writeFileSync(join(process.env.AUTH_TEST_ROOT,'build-passed'),'yes');
 } else process.exit(99);
 `);
@@ -70,6 +78,8 @@ if(args[0]==='exec' && args[1]==='codex') {
       ...process.env, CI: 'true', PATH: `${bin}:${process.env.PATH}`,
       CODEX_API_KEY: withApiKey ? 'fixture-codex-key' : undefined,
       OPENAI_API_KEY: withApiKey ? 'fixture-openai-key' : undefined,
+      CODEX_HOME: join(root, 'codex'), FIGMA_OAUTH_TOKEN: 'fixture-figma-token',
+      FIGMA_MCP_CREDENTIALS: 'fixture-credential-cache', FIGMA_CREDENTIALS_WRITE_TOKEN: 'fixture-secret-writer',
       AUTH_TEST_ROOT: root, AUTH_TEST_HAS_KEY: String(withApiKey),
     } });
     assert.equal(result.status, 0, result.stderr);

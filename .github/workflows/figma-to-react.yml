@@ -10,8 +10,13 @@ on:
 
 jobs:
     implement:
+        if: github.ref == 'refs/heads/main'
         runs-on: ubuntu-latest
         container: node:24-bookworm
+        environment: figma-ci
+        concurrency:
+            group: figma-mcp-credentials
+            cancel-in-progress: false
         permissions:
             contents: write
 
@@ -55,10 +60,22 @@ jobs:
               working-directory: ui-workshop
               run: pnpm install --frozen-lockfile
 
+            - name: Restore Figma MCP credentials
+              id: figma_auth
+              env:
+                FIGMA_MCP_CREDENTIALS: ${{ secrets.FIGMA_MCP_CREDENTIALS }}
+                FIGMA_CREDENTIALS_WRITE_TOKEN: ${{ secrets.FIGMA_CREDENTIALS_WRITE_TOKEN }}
+              working-directory: ui-workshop
+              run: |
+                # Keep persistence tooling outside the agent's writable checkout.
+                install -m 500 scripts/figma-mcp-auth.mjs "$RUNNER_TEMP/figma-mcp-auth.mjs"
+                node "$RUNNER_TEMP/figma-mcp-auth.mjs" restore --home "$RUNNER_TEMP/figma-codex"
+
             - name: Port Figma to React
               env:
                 GH_TOKEN: ${{ github.token }}
                 CODEX_API_KEY: ${{ secrets.CODEX_API_KEY }}
+                CODEX_HOME: ${{ runner.temp }}/figma-codex
                 FIGMA_URL: ${{ inputs.figma_url }}
               working-directory: ui-workshop
               run: |
@@ -67,3 +84,14 @@ jobs:
                   exit 1
                 fi
                 node scripts/implement-design.mjs --figma-url "$FIGMA_URL"
+
+            - name: Save refreshed Figma MCP credentials
+              if: always() && steps.figma_auth.outcome == 'success'
+              env:
+                FIGMA_MCP_CREDENTIALS: ${{ secrets.FIGMA_MCP_CREDENTIALS }}
+                FIGMA_CREDENTIALS_WRITE_TOKEN: ${{ secrets.FIGMA_CREDENTIALS_WRITE_TOKEN }}
+              run: node "$RUNNER_TEMP/figma-mcp-auth.mjs" save --home "$RUNNER_TEMP/figma-codex"
+
+            - name: Remove temporary Figma credentials
+              if: always()
+              run: rm -rf "$RUNNER_TEMP/figma-codex" "$RUNNER_TEMP/figma-mcp-auth.mjs"

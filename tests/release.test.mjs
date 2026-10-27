@@ -36,7 +36,9 @@ function fixture(mode = 'success') {
   git('config', 'user.name', 'Release test');
   git('config', 'user.email', 'release-test@example.invalid');
   for (const name of ['scripts', 'approval']) cpSync(join(source, name), join(seed, name), { recursive: true });
-  cpSync(join(source, 'package.json'), join(seed, 'package.json'));
+  const manifest = JSON.parse(readFileSync(join(source, 'package.json'), 'utf8'));
+  manifest.version = '0.1.1';
+  writeFileSync(join(seed, 'package.json'), `${JSON.stringify(manifest, null, 2)}\n`);
   writeFileSync(join(seed, '.gitignore'), 'node_modules\n');
   git('add', '--all');
   git('commit', '-m', 'Baseline');

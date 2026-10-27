@@ -129,7 +129,7 @@ function main() {
       '- Validation: pnpm install --frozen-lockfile; pnpm build.',
       '',
       'The release commit changes only the package version. No package was packed or published.',
-      'Merge this PR before preparing the private archive for a consumer.',
+      'Merge this PR before consumers adopt the released workshop commit.',
       '',
     ].join('\n'));
     report(run('gh', ['pr', 'create', '--repo', repository, '--base', 'main', '--head', releaseHead,

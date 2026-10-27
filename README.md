@@ -134,7 +134,7 @@ design branch name. For example, `design/input-add-field-states` is approved on
 Input's Docs page, not Button's. Individual stories have no approval controls.
 The approval section follows the active Docs theme, including dark mode.
 
-The production `/api/approval` function dispatches `approve-design.yml` on `main`.
+The production `/api/approval` function dispatches `storybook-approve-design.yml` on `main`.
 The workflow verifies the exact approved commit, builds it, adds a version-only
 commit on a release branch derived from that revision, and opens a PR to `main`.
 The approved design branch stays untouched. A changed branch requires
@@ -164,18 +164,91 @@ the original Figma implementation workflow is unchanged.
 Run `pnpm test:approval` to verify the service and release controller without
 calling GitHub or creating a real pull request.
 
-## Package locally
+## Notify consumers after a release
+
+`.github/workflows/notify-consumers.yml` runs after a Storybook release PR is
+merged into `main`. Ordinary PRs and closed, unmerged releases are skipped.
+The workflow calls `scripts/notify-consumers.mjs`, which reads `consumers.json`
+and dispatches each registered consumer workflow. The current target is
+`NazgoooAtanasov/react-router-poc` and its renamed `ui-package-update.yml` workflow.
+
+The notifier validates the PR's approval marker, release branch, target branch,
+and merge commit. It checks that the merge is still on workshop `main` and that
+the approved implementation received a patch, minor, or major version bump.
+Consumer inputs are derived from that exact merged revision:
+
+- `ui_commit`: the full workshop merge commit SHA.
+- `ui_version`: the package version at that commit.
+
+The library version is bumped only by the Storybook release workflow. Consumers
+adopt the release through their Git dependency reference and lockfile.
+Consumer review and merging remain separate human actions.
+
+### One-time credential setup
+
+Create a fine-grained GitHub personal access token with resource owner
+`NazgoooAtanasov`, repository access limited to the selected consumer repositories
+(currently `react-router-poc`), and **Actions: Read and write**. Metadata read
+access is included by GitHub. This credential starts consumer workflows;
+each consumer uses its own built-in token to push branches and create PRs.
+
+In **ui-workshop → Settings → Secrets and variables → Actions → Secrets**, add
+the token as the repository secret **`CONSUMER_WORKFLOW_TOKEN`**. No repository
+variable or enable switch is required. Add the secret before merging the next
+workshop release after deploying this workflow.
+
+The notification job's built-in `GH_TOKEN` reads workshop PRs and package
+metadata using Contents read and Pull requests read permissions. The dispatch
+token is passed only to the final notification step, not to dependency installs
+or tests. The existing Vercel approval secrets serve the Storybook approval API;
+the new dispatch token belongs in GitHub Actions secrets.
+
+See [fine-grained token setup](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token),
+[dispatch permissions](https://docs.github.com/en/rest/actions/workflows#create-a-workflow-dispatch-event),
+and [repository secrets](https://docs.github.com/en/actions/how-tos/write-workflows/choose-what-workflows-do/use-secrets#creating-secrets-for-a-repository).
+
+### Test and retry notifications
+
+Run a read-only dry run against an already merged release PR:
+
+```sh
+node scripts/notify-consumers.mjs --release-pr 3 --dry-run
+```
+
+This requires Node 24, installed workshop dependencies, GitHub CLI, and read
+access to the workshop. It validates the release and lists targets without
+dispatching or requiring `CONSUMER_WORKFLOW_TOKEN`.
+
+Once the workflow is on `main`, **Actions → Notify UI consumers → Run workflow**
+accepts a merged release PR number. `dry_run` defaults to true for manual runs;
+uncheck it to dispatch or retry a release. Automatic merge-triggered runs dispatch
+normally. The workflow uses the selected tooling revision while loading the
+release package metadata from its historical merge commit, so old releases can
+be retried without checking out old tooling.
+
+All consumers are attempted even if one dispatch fails. Logs and the GitHub job
+summary show the results and dispatched workflow links; any failure fails the
+notification job. A successful dispatch means the consumer workflow started;
+its run reports whether a PR was created. Rerunning may notify successful targets
+again, and the existing consumer updater reuses an open matching PR or skips an
+already installed revision. It rejects stale updates and another pending UI PR.
+
+To onboard another consumer, install its compatible `workflow_dispatch` workflow
+on its default branch, register its repository, workflow filename, and workflow
+ref in `consumers.json`, and include that repository in the token's access.
+
+## Package locally (optional)
 
 ```sh
 pnpm pack
 ```
 
-The `prepack` script builds the library before creating `poc-ui-0.1.1.tgz`.
+The `prepack` script builds the library before creating a versioned `.tgz` archive.
 The archive contains the library's JavaScript, TypeScript declarations and CSS.
 React is supplied by the consumer through a peer dependency.
 
-After review and approval, the consumer will put the archive in its own `vendor/`
-directory and install it from that path. Component imports will use `@poc/ui`;
+The current React Router consumer installs directly from a pinned GitHub commit;
+an archive is not needed for its update workflow. Component imports use `@poc/ui`;
 the stylesheet is exported as `@poc/ui/styles.css`.
 
 ## Where things live

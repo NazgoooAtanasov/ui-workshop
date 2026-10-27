@@ -1,8 +1,9 @@
 import assert from 'node:assert/strict';
+import { existsSync } from 'node:fs';
 import { afterEach, beforeEach, mock, test } from 'node:test';
 
 import approvalHandler, { handleApproval } from '../api/approval.ts';
-import { approvalMarker, isComponentDesignBranch, nextVersion, productionOrigin, releaseBranch } from '../approval/contracts.ts';
+import { approvalMarker, isComponentDesignBranch, nextVersion, productionOrigin, releaseBranch, workflowFile } from '../approval/contracts.ts';
 
 const key = 'fixture-reviewer-key-not-a-real-secret';
 const sha = 'a'.repeat(40);
@@ -91,13 +92,17 @@ test('stale preview commits are rejected without dispatching', async () => {
   assert.equal(fetch.mock.callCount(), 2);
 });
 
+test('the configured Storybook approval workflow exists', () => {
+  assert.ok(existsSync(new URL(`../.github/workflows/${workflowFile}`, import.meta.url)));
+});
+
 test('approval dispatches the trusted main workflow with the exact reviewed inputs', async () => {
   const fetch = githubReplies([], { commit: { sha } }, { workflow_run_id: 456, html_url: workflowUrl });
   const response = await handleApproval(request());
   assert.equal(response.status, 202);
   assert.deepEqual(await response.json(), { state: 'queued', runId: 456, workflowUrl });
   const [url, options] = fetch.mock.calls[2].arguments;
-  assert.ok(url.endsWith('/actions/workflows/approve-design.yml/dispatches'));
+  assert.ok(url.endsWith('/actions/workflows/storybook-approve-design.yml/dispatches'));
   assert.equal(options.method, 'POST');
   assert.equal(options.headers.Authorization, 'Bearer fixture-github-token');
   assert.deepEqual(JSON.parse(options.body), {
@@ -117,26 +122,26 @@ test('reviewing different stories of the same approved revision reuses one PR', 
 });
 
 test('running workflow status stays in Storybook', async () => {
-  githubReplies({ path: '.github/workflows/approve-design.yml', status: 'in_progress', conclusion: null, html_url: workflowUrl });
+  githubReplies({ path: '.github/workflows/storybook-approve-design.yml', status: 'in_progress', conclusion: null, html_url: workflowUrl });
   const response = await handleApproval(request('GET'));
   assert.deepEqual(await response.json(), { state: 'running', runId: 456, workflowUrl });
 });
 
 test('successful completion requires a PR recording the approved commit', async () => {
-  githubReplies({ path: '.github/workflows/approve-design.yml', status: 'completed', conclusion: 'success', html_url: workflowUrl }, [pull]);
+  githubReplies({ path: '.github/workflows/storybook-approve-design.yml', status: 'completed', conclusion: 'success', html_url: workflowUrl }, [pull]);
   const response = await handleApproval(request('GET'));
   assert.deepEqual(await response.json(), { state: 'completed', prUrl });
 });
 
 test('workflow failure is reported with its workflow link', async () => {
-  githubReplies({ path: '.github/workflows/approve-design.yml', status: 'completed', conclusion: 'failure', html_url: workflowUrl });
+  githubReplies({ path: '.github/workflows/storybook-approve-design.yml', status: 'completed', conclusion: 'failure', html_url: workflowUrl });
   const result = await (await handleApproval(request('GET'))).json();
   assert.equal(result.state, 'failed');
   assert.equal(result.workflowUrl, workflowUrl);
 });
 
 test('success without a matching PR is reported as failure', async () => {
-  githubReplies({ path: '.github/workflows/approve-design.yml', status: 'completed', conclusion: 'success', html_url: workflowUrl }, []);
+  githubReplies({ path: '.github/workflows/storybook-approve-design.yml', status: 'completed', conclusion: 'success', html_url: workflowUrl }, []);
   assert.equal((await (await handleApproval(request('GET'))).json()).state, 'failed');
 });
 

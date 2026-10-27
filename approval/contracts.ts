@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 export const repository = 'NazgoooAtanasov/ui-workshop';
-export const workflowFile = 'approve-design.yml';
+export const workflowFile = 'storybook-approve-design.yml';
 export const productionOrigin = 'https://ui-workshop-five.vercel.app';
 
 export const designBranchSchema = z.string().regex(/^design\/[a-z0-9]+(?:-[a-z0-9]+)+$/);

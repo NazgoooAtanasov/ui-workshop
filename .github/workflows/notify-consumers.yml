@@ -1,0 +1,85 @@
+name: Notify UI consumers
+run-name: 'Notify consumers of release PR #${{ github.event.pull_request.number || inputs.release_pr }}'
+
+on:
+  pull_request:
+    branches: [main]
+    types: [closed]
+  workflow_dispatch:
+    inputs:
+      release_pr:
+        description: Merged Storybook release PR number to notify or retry
+        required: true
+        type: string
+      dry_run:
+        description: Validate the release and show targets without dispatching
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+  pull-requests: read
+
+concurrency:
+  group: notify-ui-release-${{ github.event.pull_request.number || inputs.release_pr }}
+  cancel-in-progress: false
+
+jobs:
+  notify:
+    if: >-
+      (github.event_name == 'workflow_dispatch' && github.ref_name == github.event.repository.default_branch) ||
+      (github.event.pull_request.merged == true &&
+       github.event.pull_request.head.repo.full_name == github.repository &&
+       startsWith(github.event.pull_request.head.ref, 'release/') &&
+       contains(github.event.pull_request.body, '<!-- ui-workshop-approval:'))
+    runs-on: ubuntu-latest
+    container: node:24-bookworm
+    steps:
+      - name: Install Git and GitHub CLI
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends curl ca-certificates git
+          mkdir -p -m 755 /etc/apt/keyrings
+          curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg \
+            -o /etc/apt/keyrings/githubcli-archive-keyring.gpg
+          chmod a+r /etc/apt/keyrings/githubcli-archive-keyring.gpg
+          printf 'deb [arch=%s signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main\n' \
+            "$(dpkg --print-architecture)" > /etc/apt/sources.list.d/github-cli.list
+          apt-get update
+          apt-get install -y --no-install-recommends gh
+
+      - name: Set up pnpm
+        run: |
+          corepack enable pnpm
+          corepack install --global pnpm@10.15.1
+
+      - name: Clone notification tooling
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_REPOSITORY: ${{ github.repository }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+          WORKFLOW_SHA: ${{ github.sha }}
+        run: |
+          gh auth setup-git --hostname github.com
+          git clone --branch "$DEFAULT_BRANCH" "https://github.com/${SOURCE_REPOSITORY}.git" ui-workshop
+          git -C ui-workshop checkout --detach "$WORKFLOW_SHA"
+
+      - name: Install and test notification tooling
+        working-directory: ui-workshop
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm test:approval
+
+      - name: Notify consumers
+        working-directory: ui-workshop
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CONSUMER_WORKFLOW_TOKEN: ${{ secrets.CONSUMER_WORKFLOW_TOKEN }}
+          RELEASE_PR: ${{ github.event.pull_request.number || inputs.release_pr }}
+          DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run }}
+        run: |
+          if [ "$DRY_RUN" = 'true' ]; then
+            node scripts/notify-consumers.mjs --release-pr "$RELEASE_PR" --dry-run
+          else
+            node scripts/notify-consumers.mjs --release-pr "$RELEASE_PR"
+          fi

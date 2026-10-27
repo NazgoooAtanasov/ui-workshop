@@ -66,16 +66,19 @@ jobs:
               working-directory: ui-workshop
               run: pnpm install --frozen-lockfile
 
-            - name: Verify Codex sandbox
+            - name: Verify Codex sandbox and network
               env:
                 CODEX_HOME: ${{ runner.temp }}/figma-codex
               working-directory: ui-workshop
               run: |
                 mkdir -p "$CODEX_HOME"
-                pnpm exec codex sandbox -c 'sandbox_mode="workspace-write"' -- sh -eu -c '
+                pnpm exec codex sandbox -c 'sandbox_mode="workspace-write"' \
+                  -c 'sandbox_workspace_write.network_access=true' -- sh -eu -c '
                   test -r package.json
                   touch .codex-sandbox-check
                   rm .codex-sandbox-check
+                  curl --fail --silent --show-error --location --connect-timeout 10 --max-time 30 \
+                    --output /dev/null https://mcp.figma.com/.well-known/oauth-protected-resource
                 '
 
             - name: Restore Figma MCP credentials

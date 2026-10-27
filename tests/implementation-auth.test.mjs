@@ -53,6 +53,8 @@ import {writeFileSync} from 'node:fs';
 import {join} from 'node:path';
 const args=process.argv.slice(2);
 if(args[0]==='exec' && args[1]==='codex') {
+ assert.equal(args[args.indexOf('--sandbox')+1],'workspace-write');
+ assert.ok(args.includes('sandbox_workspace_write.network_access=true'));
  assert.equal(process.env.CODEX_API_KEY,process.env.AUTH_TEST_HAS_KEY==='true'?'fixture-codex-key':undefined);
  assert.equal(process.env.OPENAI_API_KEY,process.env.AUTH_TEST_HAS_KEY==='true'?'fixture-openai-key':undefined);
  assert.equal(process.env.CODEX_HOME,join(process.env.AUTH_TEST_ROOT,'codex'));

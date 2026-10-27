@@ -91,6 +91,7 @@ function main() {
     '--ephemeral',
     '--output-schema', fileURLToPath(new URL('../prompts/implementation-result.schema.json', import.meta.url)),
     '--output-last-message', reportPath,
+    '--config', 'sandbox_workspace_write.network_access=true',
     '--config', 'mcp_servers.figma.url="https://mcp.figma.com/mcp"',
     '--config', 'mcp_servers.figma.required=true',
   ];

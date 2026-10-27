@@ -120,9 +120,11 @@ workflow's shared concurrency group prevents simultaneous refreshes.
 The Node job container installs Bubblewrap and grants its sandbox launcher
 `SYS_ADMIN` with container-scoped seccomp and AppArmor allowances. Codex still
 runs with `workspace-write`; its inner sandbox restricts filesystem writes and
-drops Linux capabilities. **Verify Codex sandbox** checks repository reads and
-workspace writes before loading Figma credentials or starting a paid model run.
-These container options are specific to the implementation job.
+drops Linux capabilities. The launcher explicitly enables outbound network
+access so sandboxed commands can download Figma assets. **Verify Codex sandbox
+and network** checks repository reads, workspace writes, and an HTTPS request to
+Figma's public MCP discovery endpoint before loading Figma credentials or starting
+a paid model run. These container options are specific to the implementation job.
 
 | Secret | Location in ui-workshop | Purpose |
 | --- | --- | --- |
@@ -196,6 +198,7 @@ running. A failed save fails the job and does not print the credential contents.
 
 Official references: [Figma MCP setup](https://developers.figma.com/docs/figma-mcp-server/remote-server-installation/#set-up-the-codex-cli),
 [Codex MCP OAuth](https://learn.chatgpt.com/docs/extend/mcp#streamable-http-servers),
+[Codex command networking](https://learn.chatgpt.com/docs/agent-approvals-security#network-isolation),
 [fine-grained GitHub tokens](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token),
 [environment secret permissions](https://docs.github.com/en/rest/actions/secrets#create-or-update-an-environment-secret),
 and [when GitHub reads secrets](https://docs.github.com/en/actions/reference/security/secrets#when-github-actions-reads-secrets).

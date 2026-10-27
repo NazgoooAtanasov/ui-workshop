@@ -7,12 +7,16 @@ import { parseArgs } from 'node:util';
 
 const usage = 'Usage: node scripts/implement-design.mjs --figma-url <Figma selection URL>';
 const repository = fileURLToPath(new URL('..', import.meta.url));
+const commandEnvironment = { ...process.env };
+delete commandEnvironment.CODEX_API_KEY;
+delete commandEnvironment.OPENAI_API_KEY;
 
 function run(command, args, options = {}) {
   const result = spawnSync(command, args, {
     cwd: repository,
     encoding: 'utf8',
     stdio: ['ignore', 'pipe', 'inherit'],
+    env: commandEnvironment,
     ...options,
   });
 
@@ -93,6 +97,7 @@ function main() {
 
   try {
     run('pnpm', [...args, '-'], {
+      env: process.env,
       input: prompt,
       stdio: ['pipe', 'inherit', 'inherit'],
     });

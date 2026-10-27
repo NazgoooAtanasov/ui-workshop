@@ -58,7 +58,12 @@ jobs:
             - name: Port Figma to React
               env:
                 GH_TOKEN: ${{ github.token }}
+                CODEX_API_KEY: ${{ secrets.CODEX_API_KEY }}
                 FIGMA_URL: ${{ inputs.figma_url }}
               working-directory: ui-workshop
               run: |
+                if [ -z "$CODEX_API_KEY" ]; then
+                  echo 'Set the CODEX_API_KEY repository secret before running this workflow.' >&2
+                  exit 1
+                fi
                 node scripts/implement-design.mjs --figma-url "$FIGMA_URL"

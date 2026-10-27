@@ -247,3 +247,100 @@
     transition: none;
   }
 }
+
+.poc-hero-card {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 16px;
+  width: 640px;
+  max-width: 100%;
+  min-width: 0;
+  padding: 32px;
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+  background-color: #fff;
+  color: #111827;
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  letter-spacing: 0;
+  overflow-wrap: anywhere;
+}
+
+.poc-hero-card__eyebrow,
+.poc-hero-card__heading,
+.poc-hero-card__description {
+  margin: 0;
+}
+
+.poc-hero-card__eyebrow {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 20px;
+}
+
+.poc-hero-card__heading {
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 44px;
+}
+
+.poc-hero-card__description {
+  color: #6b7280;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+.poc-hero-card__action {
+  align-self: flex-end;
+  max-width: 100%;
+  min-height: 48px;
+  height: auto;
+  padding-block: 11px;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.poc-hero-card__action.poc-button--small {
+  min-height: 36px;
+  padding-block: 7px;
+}
+
+.poc-hero-card--tinted {
+  border-color: #c7c4ff;
+  background-color: #f5f3ff;
+}
+
+.poc-hero-card--compact {
+  gap: 12px;
+  width: 480px;
+  padding: 24px;
+}
+
+.poc-hero-card--compact .poc-hero-card__heading {
+  font-size: 28px;
+  line-height: 36px;
+}
+
+.poc-hero-card--dark {
+  border-color: #262626;
+  background-color: #111827;
+  color: #fff;
+}
+
+.poc-hero-card--dark .poc-hero-card__description {
+  color: #d1d5db;
+}
+
+.poc-hero-card--tinted .poc-hero-card__action,
+.poc-hero-card--dark .poc-hero-card__action {
+  align-self: flex-start;
+}
+
+@media (max-width: 480px) {
+  .poc-hero-card {
+    padding: 24px;
+  }
+}

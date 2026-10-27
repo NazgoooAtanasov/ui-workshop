@@ -1,4 +1,4 @@
-name: Approve design
+name: Storybook Approve design
 run-name: Approve ${{ inputs.design_branch }} @ ${{ inputs.approved_sha }}
 
 on:

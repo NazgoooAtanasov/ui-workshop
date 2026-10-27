@@ -104,6 +104,34 @@ import '@poc/ui/styles.css';
   Storybook includes the four-state preview, selected, controlled, resizable,
   and interaction-check examples.
 
+## Hero Card contract
+
+The [Figma Hero Card selection](https://www.figma.com/design/UUB3GeBjzTQFswVB4p7uQf/figma-to-react-poc?node-id=32-110)
+defines `default`, `tinted`, `compact`, and `dark` variants.
+
+```tsx
+import { HeroCard } from '@poc/ui';
+import '@poc/ui/styles.css';
+
+<HeroCard variant="tinted" buttonProps={{ onClick: handleGetStarted }} />;
+```
+
+- Editable `eyebrow`, `heading`, and `description` have the Figma defaults.
+  `headingLevel` defaults to 2; native section props and ref pass through.
+- Uses the existing Button with a medium size and “Get started” label. Dark
+  defaults to secondary; other styles default to primary. `buttonProps` accepts
+  native Button props, including label, variant, size, disabled, ref, and action.
+  Explicit overrides persist when changing the card variant.
+- Default, tinted, and dark are 640 px wide with 32 px padding and 16 px gaps.
+  Compact is 480 px wide with 24 px padding, 12 px gaps, and a smaller heading.
+  Cards fit narrower containers; text and long CTA labels wrap. Small screens
+  reduce padding to 24 px.
+- Default and compact align the CTA right; tinted and dark align it left.
+  The section is named by its heading and the card itself is not interactive.
+
+Stories include all four styles, a style matrix, resizing, Button overrides,
+keyboard/pointer assertions, and disabled assertions.
+
 ## Run locally
 
 Use Node 24 and pnpm 10.15.1. The repository includes `.nvmrc` and pins pnpm in

@@ -12,6 +12,8 @@ jobs:
     implement:
         runs-on: ubuntu-latest
         container: node:24-bookworm
+        permissions:
+            contents: write
 
         steps:
             - name: Install Git and GitHub CLI
@@ -46,6 +48,8 @@ jobs:
                 git clone --branch main \
                     "https://github.com/${SOURCE_REPOSITORY}.git" \
                     "ui-workshop"
+                git -C ui-workshop config user.name 'github-actions[bot]'
+                git -C ui-workshop config user.email '41898282+github-actions[bot]@users.noreply.github.com'
 
             - name: Install Dependencies
               working-directory: ui-workshop
@@ -53,6 +57,7 @@ jobs:
 
             - name: Port Figma to React
               env:
+                GH_TOKEN: ${{ github.token }}
                 FIGMA_URL: ${{ inputs.figma_url }}
               working-directory: ui-workshop
               run: |

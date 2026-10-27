@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { expect, fn } from 'storybook/test';
 
 import { Select, type SelectProps } from '../index';
-import './Select.stories.css';
 
 const countries = (
   <>
@@ -31,6 +30,7 @@ const meta = {
     disabled: { control: 'boolean' },
     children: { control: false },
     className: { control: false },
+    controlClassName: { control: false },
     ref: { control: false },
     onChange: { control: false },
   },
@@ -63,7 +63,7 @@ export const StateMatrix: Story = {
     },
   },
   render: (args) => (
-    <div className="select-review__states">
+    <div className="box-border flex flex-col gap-space-32 w-[360px] max-w-full p-space-20">
       {states.map((state) => (
         <div key={state} role="group" aria-label={`${state} state`}>
           <Select {...args} disabled={state === 'disabled'} data-figma-state={state} />
@@ -74,9 +74,9 @@ export const StateMatrix: Story = {
 };
 
 export const FlexibleWidth: Story = {
-  args: { className: 'select-review__fluid' },
+  args: { className: 'w-full' },
   parameters: { layout: 'padded' },
-  render: (args) => <div className="select-review__resizable"><Select {...args} /></div>,
+  render: (args) => <div className="box-border w-hero-compact-width min-w-[200px] max-w-full p-space-8 overflow-auto resize-x"><Select {...args} /></div>,
 };
 
 const ControlledSelect = (args: SelectProps) => {
@@ -89,7 +89,7 @@ const ControlledSelect = (args: SelectProps) => {
 export const Controlled: Story = { render: (args) => <ControlledSelect {...args} /> };
 
 const renderWithNeighbors = (args: SelectProps) => (
-  <div className="select-review__interaction">
+  <div className="flex flex-col items-start gap-space-24 p-space-8 [&>p]:m-0">
     <button type="button">Before select</button>
     <Select {...args} aria-describedby="country-policy" />
     <p id="country-policy">Used for regional preferences.</p>

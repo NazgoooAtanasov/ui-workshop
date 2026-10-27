@@ -3,7 +3,6 @@ import type { SyntheticEvent } from 'react';
 import { expect, fn } from 'storybook/test';
 
 import { Button, type ButtonProps } from '../index';
-import './Button.stories.css';
 
 const meta = {
   title: 'Components/Button',
@@ -74,8 +73,8 @@ export const StateMatrix: Story = {
     },
   },
   render: (args) => (
-    <div className="button-review">
-      <table className="button-review__matrix">
+    <div className="overflow-x-auto p-space-8 font-sans text-text-primary">
+      <table className="border-separate border-spacing-space-24 whitespace-nowrap [&_caption]:p-space-8 [&_caption]:text-left [&_caption]:font-semibold [&_th]:text-label [&_th]:font-semibold [&_th]:text-left [&_th]:capitalize [&_td]:p-space-8 [&_td]:text-center">
         <caption>Figma button states</caption>
         <thead>
           <tr>
@@ -119,7 +118,7 @@ const onSubmit = fn((event: SyntheticEvent<HTMLFormElement>) => {
 });
 
 const renderInForm = (args: ButtonProps) => (
-  <form className="button-review__form" onSubmit={onSubmit}>
+  <form className="flex items-center flex-wrap gap-space-24 p-space-16 [&_input]:w-[120px] [&_input]:p-space-8" onSubmit={onSubmit}>
     <input aria-label="Before button" placeholder="Before button" />
     <Button {...args} />
     <input aria-label="After button" placeholder="After button" />

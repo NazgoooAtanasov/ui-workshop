@@ -1,0 +1,848 @@
+{
+  "palette": {
+    "black": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0,
+          0,
+          0
+        ],
+        "alpha": 1,
+        "hex": "#000000"
+      },
+      "$description": "Base palette value. Prefer a semantic color role in components."
+    },
+    "white": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          1,
+          1,
+          1
+        ],
+        "alpha": 1,
+        "hex": "#FFFFFF"
+      },
+      "$description": "Base palette value. Prefer a semantic color role in components."
+    },
+    "charcoal": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.14901961386203766,
+          0.14901961386203766,
+          0.14901961386203766
+        ],
+        "alpha": 1,
+        "hex": "#262626"
+      },
+      "$description": "Base palette value. Prefer a semantic color role in components."
+    },
+    "neutral": {
+      "25": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.9803921580314636,
+            0.9803921580314636,
+            0.9803921580314636
+          ],
+          "alpha": 1,
+          "hex": "#FAFAFA"
+        },
+        "$description": "Base palette value. Prefer a semantic color role in components."
+      },
+      "50": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.9764705896377563,
+            0.9803921580314636,
+            0.9843137264251709
+          ],
+          "alpha": 1,
+          "hex": "#F9FAFB"
+        },
+        "$description": "Base palette value. Prefer a semantic color role in components."
+      },
+      "100": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.9529411792755127,
+            0.95686274766922,
+            0.9647058844566345
+          ],
+          "alpha": 1,
+          "hex": "#F3F4F6"
+        },
+        "$description": "Base palette value. Prefer a semantic color role in components."
+      },
+      "200": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.8980392217636108,
+            0.9058823585510254,
+            0.9215686321258545
+          ],
+          "alpha": 1,
+          "hex": "#E5E7EB"
+        },
+        "$description": "Base palette value. Prefer a semantic color role in components."
+      },
+      "300": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.8196078538894653,
+            0.8352941274642944,
+            0.8588235378265381
+          ],
+          "alpha": 1,
+          "hex": "#D1D5DB"
+        },
+        "$description": "Base palette value. Prefer a semantic color role in components."
+      },
+      "400": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.6117647290229797,
+            0.6392157077789307,
+            0.686274528503418
+          ],
+          "alpha": 1,
+          "hex": "#9CA3AF"
+        },
+        "$description": "Base palette value. Prefer a semantic color role in components."
+      },
+      "500": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.41960784792900085,
+            0.4470588266849518,
+            0.501960813999176
+          ],
+          "alpha": 1,
+          "hex": "#6B7280"
+        },
+        "$description": "Base palette value. Prefer a semantic color role in components."
+      },
+      "900": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.06666667014360428,
+            0.0941176488995552,
+            0.15294118225574493
+          ],
+          "alpha": 1,
+          "hex": "#111827"
+        },
+        "$description": "Base palette value. Prefer a semantic color role in components."
+      }
+    },
+    "lavender": {
+      "50": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.9607843160629272,
+            0.9529411792755127,
+            1
+          ],
+          "alpha": 1,
+          "hex": "#F5F3FF"
+        },
+        "$description": "Base palette value. Prefer a semantic color role in components."
+      },
+      "100": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.9333333373069763,
+            0.929411768913269,
+            1
+          ],
+          "alpha": 1,
+          "hex": "#EEEDFF"
+        },
+        "$description": "Base palette value. Prefer a semantic color role in components."
+      },
+      "300": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.7803921699523926,
+            0.7686274647712708,
+            1
+          ],
+          "alpha": 1,
+          "hex": "#C7C4FF"
+        },
+        "$description": "Base palette value. Prefer a semantic color role in components."
+      },
+      "400": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.6784313917160034,
+            0.658823549747467,
+            1
+          ],
+          "alpha": 1,
+          "hex": "#ADA8FF"
+        },
+        "$description": "Base palette value. Prefer a semantic color role in components."
+      },
+      "500": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.6627451181411743,
+            0.6392157077789307,
+            1
+          ],
+          "alpha": 1,
+          "hex": "#A9A3FF"
+        },
+        "$description": "Base palette value. Prefer a semantic color role in components."
+      },
+      "700": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.26274511218070984,
+            0.21960784494876862,
+            0.7921568751335144
+          ],
+          "alpha": 1,
+          "hex": "#4338CA"
+        },
+        "$description": "Base palette value. Prefer a semantic color role in components."
+      }
+    }
+  },
+  "color": {
+    "text": {
+      "primary": {
+        "$type": "color",
+        "$value": "{palette.neutral.900}",
+        "$description": "Semantic role: text primary."
+      },
+      "secondary": {
+        "$type": "color",
+        "$value": "{palette.neutral.500}",
+        "$description": "Semantic role: text secondary."
+      },
+      "disabled": {
+        "$type": "color",
+        "$value": "{palette.neutral.400}",
+        "$description": "Semantic role: text disabled."
+      },
+      "inverse": {
+        "$type": "color",
+        "$value": "{palette.white}",
+        "$description": "Semantic role: text inverse."
+      },
+      "on-dark": {
+        "$type": "color",
+        "$value": "{palette.neutral.300}",
+        "$description": "Semantic role: text on-dark."
+      }
+    },
+    "surface": {
+      "default": {
+        "$type": "color",
+        "$value": "{palette.white}",
+        "$description": "Semantic role: surface default."
+      },
+      "hover": {
+        "$type": "color",
+        "$value": "{palette.neutral.25}",
+        "$description": "Semantic role: surface hover."
+      },
+      "subtle": {
+        "$type": "color",
+        "$value": "{palette.neutral.50}",
+        "$description": "Semantic role: surface subtle."
+      },
+      "tinted": {
+        "$type": "color",
+        "$value": "{palette.lavender.50}",
+        "$description": "Semantic role: surface tinted."
+      },
+      "disabled": {
+        "$type": "color",
+        "$value": "{palette.neutral.100}",
+        "$description": "Semantic role: surface disabled."
+      },
+      "dark": {
+        "$type": "color",
+        "$value": "{palette.neutral.900}",
+        "$description": "Semantic role: surface dark."
+      }
+    },
+    "border": {
+      "default": {
+        "$type": "color",
+        "$value": "{palette.neutral.300}",
+        "$description": "Semantic role: border default."
+      },
+      "control": {
+        "$type": "color",
+        "$value": "{palette.neutral.400}",
+        "$description": "Semantic role: border control."
+      },
+      "strong": {
+        "$type": "color",
+        "$value": "{palette.black}",
+        "$description": "Semantic role: border strong."
+      },
+      "disabled": {
+        "$type": "color",
+        "$value": "{palette.neutral.300}",
+        "$description": "Semantic role: border disabled."
+      },
+      "accent": {
+        "$type": "color",
+        "$value": "{palette.lavender.300}",
+        "$description": "Semantic role: border accent."
+      },
+      "accent-hover": {
+        "$type": "color",
+        "$value": "{palette.lavender.500}",
+        "$description": "Semantic role: border accent-hover."
+      },
+      "dark": {
+        "$type": "color",
+        "$value": "{palette.charcoal}",
+        "$description": "Semantic role: border dark."
+      }
+    },
+    "action": {
+      "disabled-text": {
+        "$type": "color",
+        "$value": "{palette.neutral.500}",
+        "$description": "Semantic role: action disabled-text."
+      },
+      "primary": {
+        "background": {
+          "$type": "color",
+          "$value": "{palette.black}",
+          "$description": "Semantic role: action primary background."
+        },
+        "hover": {
+          "$type": "color",
+          "$value": "{palette.charcoal}",
+          "$description": "Semantic role: action primary hover."
+        },
+        "disabled": {
+          "$type": "color",
+          "$value": "{palette.neutral.200}",
+          "$description": "Semantic role: action primary disabled."
+        },
+        "text": {
+          "$type": "color",
+          "$value": "{palette.white}",
+          "$description": "Semantic role: action primary text."
+        }
+      },
+      "secondary": {
+        "background": {
+          "$type": "color",
+          "$value": "{palette.white}",
+          "$description": "Semantic role: action secondary background."
+        },
+        "hover": {
+          "$type": "color",
+          "$value": "{palette.lavender.100}",
+          "$description": "Semantic role: action secondary hover."
+        },
+        "disabled": {
+          "$type": "color",
+          "$value": "{palette.neutral.50}",
+          "$description": "Semantic role: action secondary disabled."
+        },
+        "text": {
+          "$type": "color",
+          "$value": "{palette.lavender.700}",
+          "$description": "Semantic role: action secondary text."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{palette.lavender.300}",
+          "$description": "Semantic role: action secondary border."
+        },
+        "border-hover": {
+          "$type": "color",
+          "$value": "{palette.lavender.500}",
+          "$description": "Semantic role: action secondary border-hover."
+        }
+      }
+    },
+    "focus": {
+      "ring": {
+        "$type": "color",
+        "$value": "{palette.lavender.400}",
+        "$description": "Semantic role: focus ring."
+      },
+      "gap": {
+        "$type": "color",
+        "$value": "{palette.white}",
+        "$description": "Semantic role: focus gap."
+      }
+    }
+  },
+  "space": {
+    "0": {
+      "$type": "dimension",
+      "$value": {
+        "value": 0,
+        "unit": "px"
+      },
+      "$description": "Spacing scale; keep layout values on this scale."
+    },
+    "2": {
+      "$type": "dimension",
+      "$value": {
+        "value": 2,
+        "unit": "px"
+      },
+      "$description": "Spacing scale; keep layout values on this scale."
+    },
+    "4": {
+      "$type": "dimension",
+      "$value": {
+        "value": 4,
+        "unit": "px"
+      },
+      "$description": "Spacing scale; keep layout values on this scale."
+    },
+    "8": {
+      "$type": "dimension",
+      "$value": {
+        "value": 8,
+        "unit": "px"
+      },
+      "$description": "Spacing scale; keep layout values on this scale."
+    },
+    "12": {
+      "$type": "dimension",
+      "$value": {
+        "value": 12,
+        "unit": "px"
+      },
+      "$description": "Spacing scale; keep layout values on this scale."
+    },
+    "16": {
+      "$type": "dimension",
+      "$value": {
+        "value": 16,
+        "unit": "px"
+      },
+      "$description": "Spacing scale; keep layout values on this scale."
+    },
+    "20": {
+      "$type": "dimension",
+      "$value": {
+        "value": 20,
+        "unit": "px"
+      },
+      "$description": "Spacing scale; keep layout values on this scale."
+    },
+    "24": {
+      "$type": "dimension",
+      "$value": {
+        "value": 24,
+        "unit": "px"
+      },
+      "$description": "Spacing scale; keep layout values on this scale."
+    },
+    "32": {
+      "$type": "dimension",
+      "$value": {
+        "value": 32,
+        "unit": "px"
+      },
+      "$description": "Spacing scale; keep layout values on this scale."
+    },
+    "48": {
+      "$type": "dimension",
+      "$value": {
+        "value": 48,
+        "unit": "px"
+      },
+      "$description": "Spacing scale; keep layout values on this scale."
+    },
+    "64": {
+      "$type": "dimension",
+      "$value": {
+        "value": 64,
+        "unit": "px"
+      },
+      "$description": "Spacing scale; keep layout values on this scale."
+    }
+  },
+  "radius": {
+    "small": {
+      "$type": "dimension",
+      "$value": {
+        "value": 10,
+        "unit": "px"
+      },
+      "$description": "Corner radius for small elements."
+    },
+    "control": {
+      "$type": "dimension",
+      "$value": {
+        "value": 12,
+        "unit": "px"
+      },
+      "$description": "Corner radius for control elements."
+    },
+    "card": {
+      "$type": "dimension",
+      "$value": {
+        "value": 12,
+        "unit": "px"
+      },
+      "$description": "Corner radius for card elements."
+    }
+  },
+  "size": {
+    "button": {
+      "small-height": {
+        "$type": "dimension",
+        "$value": {
+          "value": 36,
+          "unit": "px"
+        },
+        "$description": "Shared dimension in pixels."
+      }
+    },
+    "control": {
+      "height": {
+        "$type": "dimension",
+        "$value": {
+          "value": 48,
+          "unit": "px"
+        },
+        "$description": "Shared dimension in pixels."
+      }
+    },
+    "icon": {
+      "size": {
+        "$type": "dimension",
+        "$value": {
+          "value": 20,
+          "unit": "px"
+        },
+        "$description": "Shared dimension in pixels."
+      },
+      "stroke": {
+        "$type": "dimension",
+        "$value": {
+          "value": 1.5,
+          "unit": "px"
+        }
+      }
+    },
+    "field": {
+      "width": {
+        "$type": "dimension",
+        "$value": {
+          "value": 320,
+          "unit": "px"
+        },
+        "$description": "Shared dimension in pixels."
+      }
+    },
+    "accordion": {
+      "width": {
+        "$type": "dimension",
+        "$value": {
+          "value": 600,
+          "unit": "px"
+        },
+        "$description": "Shared dimension in pixels."
+      }
+    },
+    "hero": {
+      "width": {
+        "$type": "dimension",
+        "$value": {
+          "value": 640,
+          "unit": "px"
+        },
+        "$description": "Shared dimension in pixels."
+      },
+      "compact-width": {
+        "$type": "dimension",
+        "$value": {
+          "value": 480,
+          "unit": "px"
+        },
+        "$description": "Shared dimension in pixels."
+      }
+    },
+    "border": {
+      "width": {
+        "$type": "dimension",
+        "$value": {
+          "value": 1,
+          "unit": "px"
+        },
+        "$description": "Shared dimension in pixels."
+      }
+    },
+    "focus": {
+      "gap": {
+        "$type": "dimension",
+        "$value": {
+          "value": 2,
+          "unit": "px"
+        },
+        "$description": "Shared dimension in pixels."
+      },
+      "ring": {
+        "$type": "dimension",
+        "$value": {
+          "value": 3,
+          "unit": "px"
+        },
+        "$description": "Shared dimension in pixels."
+      },
+      "outer-spread": {
+        "$type": "dimension",
+        "$value": {
+          "value": 5,
+          "unit": "px"
+        },
+        "$description": "Shared dimension in pixels."
+      },
+      "blur": {
+        "$type": "dimension",
+        "$value": {
+          "value": 0,
+          "unit": "px"
+        },
+        "$description": "Shared dimension in pixels."
+      },
+      "offset": {
+        "$type": "dimension",
+        "$value": {
+          "value": 0,
+          "unit": "px"
+        },
+        "$description": "Shared dimension in pixels."
+      }
+    }
+  },
+  "layout": {
+    "control": {
+      "padding-inline": {
+        "$type": "dimension",
+        "$value": "{space.16}",
+        "$description": "Component spacing role: control padding-inline."
+      },
+      "gap": {
+        "$type": "dimension",
+        "$value": "{space.8}",
+        "$description": "Component spacing role: control gap."
+      }
+    },
+    "button": {
+      "small-padding-inline": {
+        "$type": "dimension",
+        "$value": "{space.16}",
+        "$description": "Component spacing role: button small-padding-inline."
+      },
+      "medium-padding-inline": {
+        "$type": "dimension",
+        "$value": "{space.24}",
+        "$description": "Component spacing role: button medium-padding-inline."
+      }
+    },
+    "field": {
+      "gap": {
+        "$type": "dimension",
+        "$value": "{space.8}",
+        "$description": "Component spacing role: field gap."
+      }
+    },
+    "accordion": {
+      "padding": {
+        "$type": "dimension",
+        "$value": "{space.20}",
+        "$description": "Component spacing role: accordion padding."
+      },
+      "gap": {
+        "$type": "dimension",
+        "$value": "{space.16}",
+        "$description": "Component spacing role: accordion gap."
+      }
+    },
+    "hero": {
+      "padding": {
+        "$type": "dimension",
+        "$value": "{space.32}",
+        "$description": "Component spacing role: hero padding."
+      },
+      "gap": {
+        "$type": "dimension",
+        "$value": "{space.16}",
+        "$description": "Component spacing role: hero gap."
+      },
+      "compact-padding": {
+        "$type": "dimension",
+        "$value": "{space.24}",
+        "$description": "Component spacing role: hero compact-padding."
+      },
+      "compact-gap": {
+        "$type": "dimension",
+        "$value": "{space.12}",
+        "$description": "Component spacing role: hero compact-gap."
+      }
+    }
+  },
+  "font": {
+    "family": {
+      "$type": "string",
+      "$value": "Inter",
+      "$description": "Shared UI font family."
+    },
+    "weight": {
+      "regular": {
+        "$type": "number",
+        "$value": 400,
+        "$description": "CSS font weight for regular text."
+      },
+      "bold": {
+        "$type": "number",
+        "$value": 700,
+        "$description": "CSS font weight for bold text."
+      }
+    },
+    "size": {
+      "caption": {
+        "$type": "dimension",
+        "$value": {
+          "value": 12,
+          "unit": "px"
+        },
+        "$description": "Font size for caption text."
+      },
+      "label": {
+        "$type": "dimension",
+        "$value": {
+          "value": 14,
+          "unit": "px"
+        },
+        "$description": "Font size for label text."
+      },
+      "body": {
+        "$type": "dimension",
+        "$value": {
+          "value": 16,
+          "unit": "px"
+        },
+        "$description": "Font size for body text."
+      },
+      "heading-compact": {
+        "$type": "dimension",
+        "$value": {
+          "value": 28,
+          "unit": "px"
+        },
+        "$description": "Font size for heading-compact text."
+      },
+      "heading": {
+        "$type": "dimension",
+        "$value": {
+          "value": 36,
+          "unit": "px"
+        },
+        "$description": "Font size for heading text."
+      }
+    },
+    "line-height": {
+      "caption": {
+        "$type": "dimension",
+        "$value": {
+          "value": 20,
+          "unit": "px"
+        },
+        "$description": "Line height for caption text."
+      },
+      "label": {
+        "$type": "dimension",
+        "$value": {
+          "value": 20,
+          "unit": "px"
+        },
+        "$description": "Line height for label text."
+      },
+      "body": {
+        "$type": "dimension",
+        "$value": {
+          "value": 24,
+          "unit": "px"
+        },
+        "$description": "Line height for body text."
+      },
+      "heading-compact": {
+        "$type": "dimension",
+        "$value": {
+          "value": 36,
+          "unit": "px"
+        },
+        "$description": "Line height for heading-compact text."
+      },
+      "heading": {
+        "$type": "dimension",
+        "$value": {
+          "value": 44,
+          "unit": "px"
+        },
+        "$description": "Line height for heading text."
+      }
+    }
+  },
+  "motion": {
+    "duration": {
+      "interaction": {
+        "$type": "number",
+        "$value": 120,
+        "$description": "Hover/focus transition duration in milliseconds; respect reduced motion."
+      }
+    },
+    "easing": {
+      "standard": {
+        "$type": "string",
+        "$value": "ease-out",
+        "$description": "CSS transition easing."
+      }
+    }
+  }
+}

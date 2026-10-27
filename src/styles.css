@@ -1,3 +1,4 @@
+@import '@fontsource/inter/400.css';
 @import '@fontsource/inter/700.css';
 
 .poc-button {
@@ -66,8 +67,91 @@
   background-color: #f9fafb;
 }
 
+.poc-input {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 320px;
+  max-width: 100%;
+  min-width: 0;
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  letter-spacing: 0;
+}
+
+.poc-input__label {
+  color: #111827;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 20px;
+}
+
+.poc-input__control {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  height: 48px;
+  margin: 0;
+  padding: 0 16px;
+  border: 1px solid #9ca3af;
+  border-radius: 12px;
+  background-color: #fff;
+  color: #111827;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 400;
+  font-style: inherit;
+  line-height: 24px;
+  letter-spacing: inherit;
+  appearance: none;
+  transition: background-color 120ms ease, border-color 120ms ease;
+}
+
+.poc-input__control::placeholder {
+  color: #6b7280;
+  opacity: 1;
+}
+
+.poc-input__control:enabled:hover {
+  border-color: #000;
+  background-color: #fafafa;
+}
+
+.poc-input__control:enabled:focus {
+  border-color: #000;
+  outline: 3px solid #ada8ff;
+  outline-offset: 2px;
+  background-color: #f5f3ff;
+  box-shadow: 0 0 0 2px #fff;
+}
+
+.poc-input--disabled .poc-input__label {
+  color: #6b7280;
+}
+
+.poc-input__control:disabled {
+  border-color: #d1d5db;
+  background-color: #f3f4f6;
+  color: #9ca3af;
+  cursor: not-allowed;
+  opacity: 1;
+}
+
+.poc-input__control:disabled::placeholder {
+  color: #9ca3af;
+}
+
+.poc-input__hint {
+  margin: 0;
+  color: #6b7280;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 20px;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .poc-button {
+  .poc-button,
+  .poc-input__control {
     transition: none;
   }
 }

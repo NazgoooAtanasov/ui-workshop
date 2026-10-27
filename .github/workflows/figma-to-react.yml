@@ -51,7 +51,9 @@ jobs:
               working-directory: ui-workshop
               run: pnpm install --frozen-lockfile
 
-            - name: Check codex
+            - name: Port Figma to React
+              env:
+                FIGMA_URL: ${{ inputs.figma_url }}
               working-directory: ui-workshop
               run: |
-                printf 'Codex version - %s\n' "$(pnpm exec codex --version)"
+                node scripts/implement-design.mjs --figma-url "$FIGMA_URL"

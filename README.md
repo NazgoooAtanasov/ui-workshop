@@ -133,13 +133,25 @@ import '@poc/ui/styles.css';
 Stories include all four styles, a style matrix, resizing, Button overrides,
 keyboard/pointer assertions, and disabled assertions.
 
+## Accordion contract
+
+The [Figma Accordion selection](https://www.figma.com/design/URreSeq8ZUhiQVdQbFqhFr/Figma2RepoPoc?node-id=14-489)
+defines collapsed and expanded states. `Accordion` uses native `details` and
+`summary`: Enter, Space, and pointer activation toggle the disclosure, while
+body text remains selectable. It starts collapsed; native `open`, `onToggle`,
+`name`, and ref pass through. Items open independently by default.
+
+`summary` and `content` accept editable text with the Figma defaults. The root
+accepts `className`, defaults to 600 px wide, and fits narrower containers.
+It uses accordion spacing, card border/radius, and shared text/focus tokens.
+Stories cover both states, resizing, and keyboard/pointer interactions.
+
 ## Tokens and Tailwind
 
 The [Figma Theme collection](https://www.figma.com/design/UUB3GeBjzTQFswVB4p7uQf/figma-to-react-poc?view=variables)
 defines 102 tokens in one Base mode. `tokens/theme.tokens.json` is the reviewed
 portable snapshot exported after tokenizing Button, Input, Select, Accordion,
-and Hero Card. The workshop currently implements the four existing React
-components; Accordion's tokens are included for its future implementation.
+and Hero Card. The workshop implements all five React components.
 Dark cards use explicit semantic roles in this collection.
 
 `pnpm tokens:build` generates `src/generated/theme.css` and

@@ -53,8 +53,18 @@ test('the shared theme preserves aliases and distinguishes custom typography fro
   );
   const tokens = readTokens(source);
   const { css } = generateTheme(tokens);
-  assert.equal(tokens.size, 102);
+  assert.equal(tokens.size, 106);
   assert.match(css, /--poc-color-action-primary-background: var\(--poc-palette-black\);/);
+  assert.match(css, /--poc-size-switch-width: 44px;/);
+  assert.match(css, /--spacing-switch-width: var\(--poc-size-switch-width\);/);
+  for (const [name, palette] of [
+    ['unchecked-background', '400'],
+    ['unchecked-hover', '500'],
+    ['thumb-disabled', '300'],
+  ]) {
+    assert.ok(css.includes(`--poc-color-switch-${name}: var(--poc-palette-neutral-${palette});`));
+    assert.ok(css.includes(`--color-switch-${name}: var(--poc-color-switch-${name});`));
+  }
   assert.match(css, /--text-body: var\(--poc-font-size-body\);/);
   assert.match(css, /--text-body--line-height: var\(--poc-font-line-height-body\);/);
 

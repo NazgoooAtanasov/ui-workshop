@@ -412,6 +412,24 @@
         "$value": "{palette.white}",
         "$description": "Semantic role: focus gap."
       }
+    },
+    "switch": {
+      "unchecked": {
+        "background": {
+          "$type": "color",
+          "$value": "{palette.neutral.400}"
+        },
+        "hover": {
+          "$type": "color",
+          "$value": "{palette.neutral.500}"
+        }
+      },
+      "thumb": {
+        "disabled": {
+          "$type": "color",
+          "$value": "{palette.neutral.300}"
+        }
+      }
     }
   },
   "space": {
@@ -656,6 +674,16 @@
           "unit": "px"
         },
         "$description": "Shared dimension in pixels."
+      }
+    },
+    "switch": {
+      "width": {
+        "$type": "dimension",
+        "$value": {
+          "value": 44,
+          "unit": "px"
+        },
+        "$description": "Switch track width in pixels. Provide at least a 44 px high pointer target in implementation."
       }
     }
   },

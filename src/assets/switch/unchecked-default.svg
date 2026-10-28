@@ -1,0 +1,11 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="46" height="26" viewBox="0 0 46 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Track">
+<mask id="path-1-outside-1_0_18" maskUnits="userSpaceOnUse" x="0" y="0" width="46" height="26" fill="black">
+<rect fill="white" width="46" height="26"/>
+<path d="M1 13C1 6.37258 6.37258 1 13 1H33C39.6274 1 45 6.37258 45 13V13C45 19.6274 39.6274 25 33 25H13C6.37258 25 1 19.6274 1 13V13Z"/>
+</mask>
+<path d="M1 13C1 6.37258 6.37258 1 13 1H33C39.6274 1 45 6.37258 45 13V13C45 19.6274 39.6274 25 33 25H13C6.37258 25 1 19.6274 1 13V13Z" fill="#9CA3AF"/>
+<path d="M1 13M45 13M45 13M1 13M13 1V2H33V1V0H13V1ZM45 13M33 25V24H13V25V26H33V25ZM1 13M13 25V24C6.92487 24 2 19.0751 2 13H1H0C0 20.1797 5.8203 26 13 26V25ZM45 13H44C44 19.0751 39.0751 24 33 24V25V26C40.1797 26 46 20.1797 46 13H45ZM33 1V2C39.0751 2 44 6.92487 44 13H45H46C46 5.8203 40.1797 0 33 0V1ZM13 1V0C5.8203 0 0 5.8203 0 13H1H2C2 6.92487 6.92487 2 13 2V1Z" fill="black" mask="url(#path-1-outside-1_0_18)"/>
+<path id="Thumb" d="M13 23C18.5228 23 23 18.5228 23 13C23 7.47715 18.5228 3 13 3C7.47715 3 3 7.47715 3 13C3 18.5228 7.47715 23 13 23Z" fill="white"/>
+</g>
+</svg>

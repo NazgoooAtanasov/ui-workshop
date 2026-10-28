@@ -146,6 +146,27 @@ accepts `className`, defaults to 600 px wide, and fits narrower containers.
 It uses accordion spacing, card border/radius, and shared text/focus tokens.
 Stories cover both states, resizing, and keyboard/pointer interactions.
 
+## Switch contract
+
+The [Figma Switch selection](https://www.figma.com/design/URreSeq8ZUhiQVdQbFqhFr/Figma2RepoPoc?node-id=20-53)
+defines checked and unchecked Default, Hover, Focus, and Disabled states.
+
+`Switch` uses a native checkbox with `role="switch"`. Supply `label="Notifications"`,
+`defaultChecked` for an uncontrolled initial value, or `checked` and
+`onCheckedChange` for controlled usage. Native input props, form submission,
+`onChange`, disabled behavior, and ref pass through. Space, Enter, and pointer
+activation toggle once. The integrated label shares the 48 px target.
+
+`className` overrides the root label and `controlClassName` overrides the native
+input. `showLabel={false}` visually hides the label while retaining its accessible
+name. When omitting `label`, supply `aria-label` or `aria-labelledby`.
+The eight supplied track assets retain their native geometry; focus surrounds
+only the track and remains visible while hovered. Hover/focus fades use the
+shared interaction duration and respect reduced motion. Checked changes use
+the supplied static assets rather than the Figma prototype's sliding thumb.
+Stories cover all eight states, controlled usage, hidden/omitted labels, keyboard
+and pointer interaction, and disabled behavior.
+
 ## Tokens and Tailwind
 
 The [Figma Theme collection](https://www.figma.com/design/UUB3GeBjzTQFswVB4p7uQf/figma-to-react-poc?view=variables)

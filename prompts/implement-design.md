@@ -69,7 +69,10 @@ Keep changes focused on token synchronization and the selected component;
 preserve unrelated work.
 
 Inspect the final diff and simplify unnecessary code before finishing. Run
-focused checks as needed; the launcher will run `pnpm build` before committing.
+`pnpm lint` and fix accessibility findings before reporting `implemented`.
+Do not weaken lint rules or add suppressions just to make checks pass. Run other
+focused checks as needed; the launcher will run `pnpm build`, including lint,
+before committing.
 
 Suggest an implementation branch using `design/<component>-<change-description>`.
 Use lowercase, hyphen-separated words describing what changed, for example

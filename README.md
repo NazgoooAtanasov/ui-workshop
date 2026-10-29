@@ -287,6 +287,7 @@ Open http://localhost:6006.
 ## Check and build
 
 ```sh
+pnpm lint
 pnpm typecheck
 pnpm build:lib
 pnpm build-storybook
@@ -295,7 +296,16 @@ pnpm exec playwright install chromium
 pnpm test:styles
 ```
 
-`pnpm build` runs type checking, the library build, and the Storybook build.
+`pnpm lint` runs Oxlint on `src`, including component implementations and stories.
+The built-in `jsx-a11y` correctness rules report accessibility issues as errors,
+including missing alternative text, invalid ARIA, label associations, and keyboard
+support for click handlers. Compiled output and generated token files are excluded.
+These checks inspect source code; use Storybook's Accessibility panel and browser
+interaction tests to review rendered accessibility, contrast, and focus behavior.
+
+`pnpm build` runs lint, type checking, the library build, and the Storybook build.
+Component generation and Storybook-approved releases both run this build, so lint
+failures stop generation before committing or pushing and stop release preparation.
 The library is written to `dist/`, and the static Storybook site is written to
 `storybook-static/`. `pnpm test:approval` covers approval/release automation,
 token parsing, and utility merging. `pnpm test:styles` runs Chromium checks

@@ -54,6 +54,7 @@ export const Switch = ({
         className,
       )}
     >
+      {/* oxlint-disable jsx-a11y/role-has-required-aria-props -- Native checkbox checked supplies the switch state: https://www.w3.org/WAI/ARIA/apg/patterns/switch/ */}
       <input
         {...inputProps}
         id={controlId}
@@ -75,6 +76,7 @@ export const Switch = ({
           }
         }}
       />
+      {/* oxlint-enable jsx-a11y/role-has-required-aria-props */}
       <span aria-hidden="true" className="w-switch-width h-space-24 shrink-0" />
       {disabled ? (
         <img src={assets.disabled} alt="" aria-hidden="true" className={imageClasses} />

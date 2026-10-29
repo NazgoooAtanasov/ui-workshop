@@ -169,10 +169,9 @@ and pointer interaction, and disabled behavior.
 
 ## Tokens and Tailwind
 
-The [Figma Theme collection](https://www.figma.com/design/UUB3GeBjzTQFswVB4p7uQf/figma-to-react-poc?view=variables)
-defines 102 tokens in one Base mode. `tokens/theme.tokens.json` is the reviewed
-portable snapshot exported after tokenizing Button, Input, Select, Accordion,
-and Hero Card. The workshop implements all five React components.
+The [Figma Theme collection](https://www.figma.com/design/URreSeq8ZUhiQVdQbFqhFr/Figma2RepoPoc?view=variables)
+is the shared token source, using its Base mode. `tokens/theme.tokens.json` is
+the portable snapshot used by the workshop's React components.
 Dark cards use explicit semantic roles in this collection.
 
 `pnpm tokens:build` generates `src/generated/theme.css` and
@@ -232,7 +231,13 @@ as `h2 { font-size: ... }`.
    component approval, release version bump, and consumer notification process
    still applies.
 
-Token import is manual. There is no background synchronization with Figma.
+For manual updates, use the export/import steps above. The Figma To React workflow
+instructs Codex to synchronize the complete Theme collection's Base mode from
+Figma2RepoPoc (`URreSeq8ZUhiQVdQbFqhFr`) through Figma MCP before implementing a
+component. It imports the snapshot into the current checkout and includes token
+changes in the same generated design branch. The run must stop if it cannot read
+the full collection or validate the import. Shared token changes also require
+Foundations/Theme review. There is no background synchronization with Figma.
 
 ### Consumer styling
 
@@ -295,7 +300,8 @@ and consumer overrides. It builds Storybook before testing; install Chromium onc
 
 Run **Actions → Figma To React → Run workflow** on `main` with a Figma selection
 URL containing `node-id`. The workflow uses the OpenAI API for Codex billing,
-reads the design through the official Figma MCP server, and pushes a
+instructs Codex to synchronize shared tokens first and then read and implement
+the design through the official Figma MCP server, and pushes a
 `design/<component>-<change-description>` branch for Vercel's Storybook preview.
 Storybook approval and the release/version PR remain separate human-driven steps.
 

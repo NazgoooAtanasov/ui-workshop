@@ -13,7 +13,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'The [Figma Button](https://www.figma.com/design/UUB3GeBjzTQFswVB4p7uQf/figma-to-react-poc?node-id=9-330). Hover and focus follow browser interactions; disabled uses the native attribute. The consuming screen supplies the action.',
+          'The [Figma Button](https://www.figma.com/design/URreSeq8ZUhiQVdQbFqhFr/Figma2RepoPoc?node-id=14-326). Hover and focus follow browser interactions; disabled uses the native attribute. The consuming screen supplies the action.',
       },
     },
   },

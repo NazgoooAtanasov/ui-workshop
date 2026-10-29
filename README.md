@@ -3,17 +3,23 @@
 The shared React library and Storybook review environment for the Figma-to-React
 proof of concept. This package is private and is installed from local archives.
 
-## Pilot design
+## Figma source of truth
 
-[Figma component selection](https://www.figma.com/design/UUB3GeBjzTQFswVB4p7uQf/figma-to-react-poc?node-id=9-330)
+[Figma2RepoPoc](https://www.figma.com/design/URreSeq8ZUhiQVdQbFqhFr/Figma2RepoPoc?node-id=14-231)
 
-- File: `UUB3GeBjzTQFswVB4p7uQf`
-- Node: `9:330`
+- File: `URreSeq8ZUhiQVdQbFqhFr`
 
-The Button is implemented from this component's Figma MCP design context. The
-Storybook state matrix covers both variants, both sizes, and all four states.
+This file is the only source for component designs, variants, shared tokens, and
+future Code Connect mappings. For workflow runs, use **Copy link to selection**
+on the intended component in this file. Retired-file node IDs must not be reused
+for migrated components. The component links below point to their migrated
+variant sets.
 
 ## Button contract
+
+The [Figma Button selection](https://www.figma.com/design/URreSeq8ZUhiQVdQbFqhFr/Figma2RepoPoc?node-id=14-326)
+defines both variants, both sizes, and all four states covered by the Storybook
+state matrix.
 
 ```tsx
 import { Button } from '@poc/ui';
@@ -45,7 +51,7 @@ Library changes require Storybook approval before package handoff.
 
 ## Input contract
 
-The [Figma Input selection](https://www.figma.com/design/UUB3GeBjzTQFswVB4p7uQf/figma-to-react-poc?node-id=19-41)
+The [Figma Input selection](https://www.figma.com/design/URreSeq8ZUhiQVdQbFqhFr/Figma2RepoPoc?node-id=14-376)
 defines Default, Hover, Focus, and Disabled states.
 
 ```tsx
@@ -79,7 +85,7 @@ examples, and executable Keyboard and Pointer and Disabled interaction checks.
 
 ## Select contract
 
-The [Figma Select selection](https://www.figma.com/design/UUB3GeBjzTQFswVB4p7uQf/figma-to-react-poc?node-id=30-11)
+The [Figma Select selection](https://www.figma.com/design/URreSeq8ZUhiQVdQbFqhFr/Figma2RepoPoc?node-id=14-409)
 defines Default, Hover, Focus, and Disabled states.
 
 ```tsx
@@ -107,7 +113,7 @@ import '@poc/ui/styles.css';
 
 ## Hero Card contract
 
-The [Figma Hero Card selection](https://www.figma.com/design/UUB3GeBjzTQFswVB4p7uQf/figma-to-react-poc?node-id=32-110)
+The [Figma Hero Card selection](https://www.figma.com/design/URreSeq8ZUhiQVdQbFqhFr/Figma2RepoPoc?node-id=14-452)
 defines `default`, `tinted`, `compact`, and `dark` variants.
 
 ```tsx
@@ -298,10 +304,11 @@ and consumer overrides. It builds Storybook before testing; install Chromium onc
 
 ## Implement Figma changes in GitHub Actions
 
-Run **Actions → Figma To React → Run workflow** on `main` with a Figma selection
-URL containing `node-id`. The workflow uses the OpenAI API for Codex billing,
-instructs Codex to synchronize shared tokens first and then read and implement
-the design through the official Figma MCP server, and pushes a
+Run **Actions → Figma To React → Run workflow** on `main` with a Figma2RepoPoc
+selection URL containing `node-id`. URLs from other files are rejected. The
+workflow uses the OpenAI API for Codex billing, instructs Codex to synchronize
+shared tokens first and then read and implement the design through the official
+Figma MCP server, and pushes a
 `design/<component>-<change-description>` branch for Vercel's Storybook preview.
 Storybook approval and the release/version PR remain separate human-driven steps.
 

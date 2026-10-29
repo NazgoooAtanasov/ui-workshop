@@ -56,10 +56,10 @@ function main() {
   const figmaUrl = new URL(values['figma-url']);
   if (
     !['https://www.figma.com', 'https://figma.com'].includes(figmaUrl.origin) ||
-    !/^\/(design|file)\/[^/]+(?:\/|$)/.test(figmaUrl.pathname) ||
+    !/^\/(design|file)\/URreSeq8ZUhiQVdQbFqhFr(?:\/|$)/.test(figmaUrl.pathname) ||
     !figmaUrl.searchParams.get('node-id')
   ) {
-    throw new Error('Provide an HTTPS Figma design URL containing node-id (Copy link to selection).');
+    throw new Error('Provide an HTTPS Figma2RepoPoc selection URL (file URreSeq8ZUhiQVdQbFqhFr) containing node-id.');
   }
 
   if (process.env.CI !== 'true' && run('git', ['status', '--porcelain'])) {

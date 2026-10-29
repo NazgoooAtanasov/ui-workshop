@@ -20,7 +20,7 @@ const meta = {
   parameters: {
     layout: 'centered',
     docs: { description: { component:
-      'The [Figma Select](https://www.figma.com/design/UUB3GeBjzTQFswVB4p7uQf/figma-to-react-poc?node-id=30-11). Native single-select with an associated label and hint. Starts with an empty prompt; supply option children with non-empty values. Native selection, keyboard navigation, and the platform option menu are preserved. Focus takes precedence over hover. className styles the field wrapper.',
+      'The [Figma Select](https://www.figma.com/design/URreSeq8ZUhiQVdQbFqhFr/Figma2RepoPoc?node-id=14-409). Native single-select with an associated label and hint. Starts with an empty prompt; supply option children with non-empty values. Native selection, keyboard navigation, and the platform option menu are preserved. Focus takes precedence over hover. className styles the field wrapper.',
     } },
   },
   argTypes: {

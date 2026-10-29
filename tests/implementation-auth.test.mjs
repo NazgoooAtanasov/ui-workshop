@@ -18,6 +18,14 @@ function command(cwd, executable, args) {
   return result.stdout.trim();
 }
 
+test('implementation rejects another Figma file before running Git or Codex', () => {
+  const result = spawnSync(process.execPath, [join(source, 'scripts/implement-design.mjs'),
+    '--figma-url', 'https://www.figma.com/design/retired/fixture?node-id=1-2',
+  ], { encoding: 'utf8', env: { ...process.env, PATH: '' } });
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /Provide an HTTPS Figma2RepoPoc selection URL/);
+});
+
 for (const withApiKey of [true, false]) {
   test(`implementation credentials are scoped to Codex (API key present: ${withApiKey})`, () => {
     const root = mkdtempSync(join(tmpdir(), 'workshop-implementation-auth-'));
@@ -75,7 +83,7 @@ if(args[0]==='exec' && args[1]==='codex') {
 `);
     chmodSync(join(bin, 'pnpm'), 0o755);
     const result = spawnSync(process.execPath, [join(checkout, 'scripts/implement-design.mjs'),
-      '--figma-url', 'https://www.figma.com/design/test/fixture?node-id=1-2',
+      '--figma-url', 'https://www.figma.com/design/URreSeq8ZUhiQVdQbFqhFr/fixture?node-id=1-2',
     ], { cwd: root, encoding: 'utf8', timeout: 20_000, env: {
       ...process.env, CI: 'true', PATH: `${bin}:${process.env.PATH}`,
       CODEX_API_KEY: withApiKey ? 'fixture-codex-key' : undefined,

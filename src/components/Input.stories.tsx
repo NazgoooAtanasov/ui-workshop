@@ -12,7 +12,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'The [Figma Input](https://www.figma.com/design/UUB3GeBjzTQFswVB4p7uQf/figma-to-react-poc?node-id=19-41). Starts empty with placeholder text. Hover, focus, and disabled follow native input behavior; focus takes precedence over hover. The label and hint are associated with the control. Native input props and ref pass through; className styles the field wrapper.',
+          'The [Figma Input](https://www.figma.com/design/URreSeq8ZUhiQVdQbFqhFr/Figma2RepoPoc?node-id=14-376). Starts empty with placeholder text. Hover, focus, and disabled follow native input behavior; focus takes precedence over hover. The label and hint are associated with the control. Native input props and ref pass through; className styles the field wrapper.',
       },
     },
   },

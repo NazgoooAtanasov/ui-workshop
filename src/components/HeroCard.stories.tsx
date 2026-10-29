@@ -9,7 +9,7 @@ const meta = {
   parameters: {
     layout: 'centered',
     docs: { description: { component:
-      'The [Figma Hero Card](https://www.figma.com/design/UUB3GeBjzTQFswVB4p7uQf/figma-to-react-poc?node-id=32-110). Four surfaces composed with the existing Button. The consumer supplies the action through buttonProps. Explicit Button overrides persist across card variants. headingLevel defaults to 2; native section props and ref pass through.',
+      'The [Figma Hero Card](https://www.figma.com/design/URreSeq8ZUhiQVdQbFqhFr/Figma2RepoPoc?node-id=14-452). Four surfaces composed with the existing Button. The consumer supplies the action through buttonProps. Explicit Button overrides persist across card variants. headingLevel defaults to 2; native section props and ref pass through.',
     } },
   },
   argTypes: {

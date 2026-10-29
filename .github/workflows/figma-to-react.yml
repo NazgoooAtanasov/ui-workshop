@@ -4,7 +4,7 @@ on:
     workflow_dispatch:
         inputs:
             figma_url:
-                description: URL to the figma design node
+                description: Figma2RepoPoc component selection URL containing node-id
                 required: true
                 type: string
 

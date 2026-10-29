@@ -4,6 +4,13 @@ Implement the component at this Figma selection in the current UI workshop repos
 
 Read the repository instructions, README, existing components, CSS, and stories before editing.
 
+Figma2RepoPoc (file key `URreSeq8ZUhiQVdQbFqhFr`) is the only source of truth for
+component designs and tokens. Use component selections and any Code Connect
+mappings from this file. Resolve migrated component node IDs through Figma MCP.
+Do not fetch designs from retired files or assume their node IDs identify
+components in this file. If the selection is outside this file or the intended
+component cannot be identified, report `blocked`.
+
 Work directly in the current checkout. Do all implementation work yourself.
 The Node launcher owns Git operations outside your sandbox. Do not clone the
 repository, create a temporary checkout or worktree, switch branches, commit,
@@ -12,7 +19,7 @@ it does not prevent you from editing the working files.
 
 Before implementing or updating the component, synchronize the shared tokens into
 this checkout through Figma MCP. Always use the Theme collection's Base mode in
-Figma2RepoPoc (file key `URreSeq8ZUhiQVdQbFqhFr`), regardless of the component URL.
+Figma2RepoPoc.
 Follow the server's instructions and load its `figma-use` skill before using
 `use_figma`. Use read-only Plugin API calls to enumerate the complete collection
 and its Base-mode values, including tokens not used by the selected component.
